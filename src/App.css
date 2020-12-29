@@ -1,4 +1,4 @@
-.App {
+/* .App {
   text-align: center;
 }
 
@@ -35,4 +35,23 @@
   to {
     transform: rotate(360deg);
   }
+} */
+
+.clickable {
+  cursor: pointer;
 }
+
+.like {
+  position: absolute; right: 4%; top: 65%;
+}
+
+.gridContainer {
+    display: grid;
+    grid-template-columns: 25% 25% 25% 25%;
+    /* grid-gap: 10px; */
+    background-color: #2196F3;
+  }
+
+  .jcc {
+    justify-content: center;
+  }
