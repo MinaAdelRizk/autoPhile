@@ -16,7 +16,7 @@ class SpareParts extends Component {
         searchQuery: "",
         selectedCategory: null,
         currentPage: 1,
-        pageSize: 6,
+        pageSize: 9,
         currency: "AED",
     };
 
@@ -70,7 +70,7 @@ class SpareParts extends Component {
         const { searchQuery, pageSize, currentPage, currency } = this.state;
         return (
             <div className="row">
-                <div className="col-2">
+                <div className="col-2 sideBar">
                     <SearchBox
                         value={searchQuery}
                         onChange={this.handleSearch}
@@ -83,16 +83,14 @@ class SpareParts extends Component {
                     />
                 </div>
 
-                <div className="col-10">
-                    <div style={{ marginBottom: 20 }}>
-                        <PartsGrid
-                            parts={data}
-                            onLike={this.handleLike}
-                            currency={currency}
-                        />
-                    </div>
+                <div className="col-10 ">
+                    <PartsGrid
+                        parts={data}
+                        onLike={this.handleLike}
+                        currency={currency}
+                    />
 
-                    <div className="row" style={{ marginTop: `2%` }}>
+                    <div className="row" style={{ marginTop: 20 }}>
                         <Pagination
                             itemsCount={count}
                             pageSize={pageSize}
