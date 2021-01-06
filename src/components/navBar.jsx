@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import CarSelectModal from "./carSelectModal"
+
 import { Navbar, Nav, NavDropdown } from 'react-bootstrap'
 
 class NavBar extends Component {
@@ -20,6 +22,11 @@ class NavBar extends Component {
                             <NavDropdown.Divider />
                             <NavDropdown.Item href="request-service-quotation">Request Service Quotation</NavDropdown.Item>
                         </NavDropdown>
+                    </Nav>
+                    <Nav>
+
+                        <CarSelectModal />
+
                     </Nav>
                     <Nav>
                         <Nav.Link href="/login">Login </Nav.Link>

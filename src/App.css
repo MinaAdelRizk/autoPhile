@@ -1,9 +1,14 @@
 .clickable {
   cursor: pointer;
 }
+
+.jcc {
+  justify-content: center;
+}
+
 .searchBar {
   min-width: 125px;
-}
+}  
 .list-group-item {
   padding: 0.75rem 0.25rem 0.25rem 0.25rem;
   border-bottom: 1px solid rgba(0, 0, 0, 0.125);
@@ -11,16 +16,11 @@
   font-weight: bold;
   font-family: inherit;
   min-width: 125px;
-  z-index: 1;
-}
+}  
 
 .like {
   position: absolute; right: 4%; top: 65%;
-}
-
-.jcc {
-  justify-content: center;
-}
+}  
 
 .productImageBox {
   min-width: 200px;
@@ -32,6 +32,16 @@
   height: 446px;
 }
 
+.card-body {
+  padding: 0.5rem !important;
+}
+
+.card-footer {
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+  width: 100%;
+}
 /* // Small devices (landscape phones, 576px and up) */
 @media (max-width: 575.98px) {
   .card-columns {
