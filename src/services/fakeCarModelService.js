@@ -1,9 +1,10 @@
-export const model = [
+export const car = [
     {
-        _id: "5b21ca3eeb7f6fbccd4718181", make: "Volvo", models: [
+        make: { _id: "5b21ca3eeb7f6fbccd4718181", name: "Volvo" },
+        models: [
             {
                 _id: "volvo-s-60", name: "S60", trim: [
-                    { _id: "t4", name: "T4" }, { _id: 't6', name: 'T6' }]
+                    { _id: "t4", name: "T4" }, { _id: 't5', name: 'T5' }, { _id: 't6', name: 'T6' }]
             },
             {
                 _id: "volvo-s-80", name: "S80", trim: [
@@ -24,10 +25,11 @@ export const model = [
         ]
     },
     {
-        _id: "5b21ca3eeb7f6fbccd4718202", make: "Toyota", models: [
+        make: { _id: "5b21ca3eeb7f6fbccd4718202", name: "Toyota" },
+        models: [
             {
                 _id: "toyota-yaris", name: "Yaris", trim: [
-                    { _id: "t4", name: "T4" }, { _id: 't6', name: 'T6' }]
+                    { _id: "coupe", name: "coupe" }, { _id: 'yts', name: 'YTS' }]
             },
             {
                 _id: "toyota-corolla", name: "Corolla", trim: [
@@ -35,11 +37,11 @@ export const model = [
             },
             {
                 _id: "toyota-camry", name: "Camry", trim: [
-                    { _id: "t4", name: "T4" }, { _id: 't6', name: 'T6' }]
+                    { _id: "v3", name: "V3" }, { _id: 'v4', name: 'V4' }, { _id: 'v5', name: 'V5' }]
             },
             {
                 _id: "toyota-supra", name: "Supra", trim: [
-                    { _id: "t4", name: "T4" }, { _id: 't6', name: 'T6' }]
+                    { _id: "iv", name: "IV" }, { _id: 'v', name: 'V' }, { _id: 'vi', name: 'VI' }]
             },
             {
                 _id: "toyota-zelas", name: "Zelas", trim: [
@@ -48,7 +50,8 @@ export const model = [
         ]
     },
     {
-        _id: "5b21ca3eeb7f6fbccd4718183", make: "Nissan", models: [
+        make: { _id: "5b21ca3eeb7f6fbccd4718183", name: "Nissan" },
+        models: [
             {
                 _id: "nissan-altima", name: "Altima", trim: [
                     { _id: "t4", name: "T4" }, { _id: 't6', name: 'T6' }]
@@ -72,7 +75,8 @@ export const model = [
         ]
     },
     {
-        _id: "5b21ca3eeb7f6fbccd4718184", make: "Honda", models: [
+        make: { _id: "5b21ca3eeb7f6fbccd4718184", name: "Honda" },
+        models: [
             {
                 _id: "honda-civic", name: "Civic", trim: [
                     { _id: "t4", name: "T4" }, { _id: 't6', name: 'T6' }]
@@ -96,7 +100,8 @@ export const model = [
         ]
     },
     {
-        _id: "5b21ca3eeb7f6fbccd4718185", make: "Lexus", models: [
+        make: { _id: "5b21ca3eeb7f6fbccd4718185", name: "Lexus" },
+        models: [
             {
                 _id: "volvo-s-60", name: "S60", trim: [
                     { _id: "t4", name: "T4" }, { _id: 't6', name: 'T6' }]
@@ -120,7 +125,8 @@ export const model = [
         ]
     },
     {
-        _id: "5b21ca3eeb7f6fbccd4718186", make: "Infinity", models: [
+        make: { _id: "5b21ca3eeb7f6fbccd4718186", name: "Infinity" },
+        models: [
             {
                 _id: "volvo-s-60", name: "S60", trim: [
                     { _id: "t4", name: "T4" }, { _id: 't6', name: 'T6' }]
@@ -144,7 +150,8 @@ export const model = [
         ]
     },
     {
-        _id: "5b21ca3eeb7f6fbccd4718147", make: "Mercedes", models: [
+        make: { _id: "5b21ca3eeb7f6fbccd4718147", name: "Mercedes" },
+        models: [
             {
                 _id: "volvo-s-60", name: "S60", trim: [
                     { _id: "t4", name: "T4" }, { _id: 't6', name: 'T6' }]
@@ -168,7 +175,8 @@ export const model = [
         ]
     },
     {
-        _id: "5b21ca3eeb7f6fbccd4718188", make: "BMW", models: [
+        make: { _id: "5b21ca3eeb7f6fbccd4718188", name: "BMW" },
+        models: [
             {
                 _id: "volvo-s-60", name: "S60", trim: [
                     { _id: "t4", name: "T4" }, { _id: 't6', name: 'T6' }]
@@ -192,7 +200,8 @@ export const model = [
         ]
     },
     {
-        _id: "5b21ca3eeb7f6fbccd4718189", make: "Mini", models: [
+        make: { _id: "5b21ca3eeb7f6fbccd4718189", name: "Mini" },
+        models: [
             {
                 _id: "volvo-s-60", name: "S60", trim: [
                     { _id: "t4", name: "T4" }, { _id: 't6', name: 'T6' }]
@@ -217,6 +226,15 @@ export const model = [
     },
 ];
 
-export function getModels() {
-    return model.filter(m => m);
+export function getCars() {
+    return car.filter(m => m);
+}
+
+export function getCarMakeOptions() {
+    return car.map(car => car.make);
+}
+
+export function getModels(selectedMakeId) {
+    let cars = car.filter(car => car.make._id === selectedMakeId);
+    return cars;
 }

@@ -1,57 +1,77 @@
 import React, { Component } from 'react';
 import Select from './common/select';
 
-import { getCars } from '../services/fakeCarSelectService'
-import { getModels } from '../services/fakeCarModelService';
-
+// import { } from '../services/fakeCarSelectService'
+import { getModels, getCars, getCarMakeOptions } from '../services/fakeCarModelService';
 
 class CarSelectMenu extends Component {
     state = {
-        make: [],
-        model: [],
-        selectedMakeId: "",
-        selectedMakeModels: [],
-        selectedModelId: "",
-        selectedModelTrims: []
+        cars: [],//all cars
+        carMakeOptions: [],//all cars Make Key
+        selectedMakeId: "", //make _id
+        selectedMakeModels: [],//models based on Make selection
+        selectedModelId: "", // model _id
+        selectedModelTrims: [], // Trims based on Moake & Model selection
+        selectedTrim: "",//selected Trim
+        selectedCar: "", //"models_id + trim_id"
     }
 
     componentDidMount() {
-        const make = getCars();
-        const model = getModels();
-        this.setState({ make, model })
+        const cars = getCars();
+        const carMakeOptions = getCarMakeOptions()
+        this.setState({ cars, carMakeOptions })
     }
 
     handleMakeChange = ({ currentTarget: input }) => {
-        const selectedMakeId = input.value
-        let allModels = [...this.state.model]
-        let selectedMakeModels = allModels.filter(m => m._id === selectedMakeId);
-        selectedMakeModels = (selectedMakeModels[0].models)
-        this.setState({ selectedMakeModels, selectedMakeId })
+        const selectedMakeId = input.value;
+        let selectedMakeModels = getModels(selectedMakeId);
+        selectedMakeModels = selectedMakeModels[0].models;
+        this.setState({ selectedMakeModels, selectedMakeId });
     }
 
     handleModelChange = ({ currentTarget: input }) => {
-        const selectedModelId = input.value
-        console.log(selectedModelId)
-        let models = [...this.state.selectedMakeModels]
-        let trims = models.filter(m => m._id === selectedModelId)
-        trims = trims[0].trim
-        console.log(trims)
-        this.setState({ selectedModelTrims: trims, selectedModelId })
+        const selectedModelId = input.value;
+        const models = [...this.state.selectedMakeModels]
+        let selectedModelTrims = models.filter(m => m._id === selectedModelId)
+        selectedModelTrims = selectedModelTrims[0].trim;
+        this.setState({ selectedModelTrims, selectedModelId });
     }
 
+    handleTrimChange = ({ currentTarget: input }) => {
+        const selectedTrim = input.value;
+        const selectedCar = `${this.state.selectedModelId}-${selectedTrim}`;
+        console.log(selectedCar);
+        this.setState({ selectedTrim, selectedCar });
+    }
+
+
     render() {
-        const { make, selectedMakeId, selectedMakeModels, selectedModelId, selectedModelTrims } = this.state;
+        const {
+            carMakeOptions,
+            selectedMakeId,
+            selectedMakeModels,
+            selectedModelId,
+            selectedModelTrims,
+            years
+        } = this.state;
+
         return (
             <div>
                 <Select
-                    name={make.name}
+                    name="make"
                     label="Select Make"
-                    options={make}
+                    options={carMakeOptions}
                     onChange={this.handleMakeChange}
                 />
+                {/* 
+                <Select
+                    name="year"
+                    label="select year"
+                    options={years}
+                /> */}
 
                 {selectedMakeId && <Select
-                    name="model"
+                    name="models"
                     label="Select Model"
                     options={selectedMakeModels}
                     onChange={this.handleModelChange}
@@ -61,6 +81,7 @@ class CarSelectMenu extends Component {
                     name="trim"
                     label="Select Trim "
                     options={selectedModelTrims}
+                    onChange={this.handleTrimChange}
                 />
                 }
             </div>

@@ -11,11 +11,13 @@ function CarSelectModal() {
             <button className="btn btn-sm btn-warning mx-2" onClick={() => setModelIsOpen(true)}>Select Car <i className="fa fa-car"></i></button>
 
             <Modal isOpen={modalIsOpen} onRequestClose={() => setModelIsOpen(false)} shouldCloseOnOverlayClick={false}>
-                <h4>Modal Title</h4>
+
+                <button onClick={() => setModelIsOpen(false)} className="btn btn-danger btn-sm float-right m-3">X</button>
+                <h4>Select Car</h4>
 
                 <CarSelectMenu />
 
-                <button onClick={() => setModelIsOpen(false)}>close</button>
+                <button className="btn btn-sm btn-success">Save</button>
             </Modal>
 
         </div>

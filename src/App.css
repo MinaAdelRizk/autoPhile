@@ -6,6 +6,7 @@
   justify-content: center;
 }
 
+.ReactModal__Overlay {z-index: 1000 }
 .searchBar {
   min-width: 125px;
 }  

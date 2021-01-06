@@ -9,7 +9,7 @@ class ProductCard extends Component {
             <React.Fragment>
                 <div className="card">
                     <div className="productImageBox">
-                        <img src="..." alt="Product Image" />
+                        <img src="..." alt="" />
                     </div>
                     <div className="card-body">
                         <h5 className="card-title">
