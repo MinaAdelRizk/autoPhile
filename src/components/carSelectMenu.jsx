@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Select from './common/select';
-
-// import { } from '../services/fakeCarSelectService'
+import YearPicker from './common/yearPicker';
 import { getModels, getCars, getCarMakeOptions } from '../services/fakeCarModelService';
 
 class CarSelectMenu extends Component {
@@ -14,6 +13,7 @@ class CarSelectMenu extends Component {
         selectedModelTrims: [], // Trims based on Moake & Model selection
         selectedTrim: "",//selected Trim
         selectedCar: "", //"models_id + trim_id"
+        selectedYear: ""
     }
 
     componentDidMount() {
@@ -38,12 +38,17 @@ class CarSelectMenu extends Component {
     }
 
     handleTrimChange = ({ currentTarget: input }) => {
+        const { selectedModelId, selectedYear } = this.state;
         const selectedTrim = input.value;
-        const selectedCar = `${this.state.selectedModelId}-${selectedTrim}`;
-        console.log(selectedCar);
+        const selectedCar = `${selectedModelId}-${selectedTrim}-${selectedYear}`
+        console.log(selectedCar)
         this.setState({ selectedTrim, selectedCar });
     }
 
+    handleYearChange = ({ currentTarget: input }) => {
+        const selectedYear = input.value;
+        this.setState({ selectedYear })
+    }
 
     render() {
         const {
@@ -52,39 +57,41 @@ class CarSelectMenu extends Component {
             selectedMakeModels,
             selectedModelId,
             selectedModelTrims,
-            years
         } = this.state;
 
         return (
             <div>
+                <YearPicker
+                    name="year"
+                    label="Select Year"
+                    onChange={this.handleYearChange}
+                />
+
                 <Select
                     name="make"
                     label="Select Make"
                     options={carMakeOptions}
                     onChange={this.handleMakeChange}
                 />
-                {/* 
-                <Select
-                    name="year"
-                    label="select year"
-                    options={years}
-                /> */}
 
-                {selectedMakeId && <Select
-                    name="models"
-                    label="Select Model"
-                    options={selectedMakeModels}
-                    onChange={this.handleModelChange}
-                />}
-
-                {selectedModelId && <Select
-                    name="trim"
-                    label="Select Trim "
-                    options={selectedModelTrims}
-                    onChange={this.handleTrimChange}
-                />
+                {
+                    selectedMakeId && <Select
+                        name="models"
+                        label="Select Model"
+                        options={selectedMakeModels}
+                        onChange={this.handleModelChange}
+                    />
                 }
-            </div>
+
+                {
+                    selectedModelId && <Select
+                        name="trim"
+                        label="Select Trim "
+                        options={selectedModelTrims}
+                        onChange={this.handleTrimChange}
+                    />
+                }
+            </div >
         );
     }
 }
