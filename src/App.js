@@ -8,6 +8,8 @@ import Maintenance from './components/maintenance';
 import NotFound from './components/notFound';
 import RegisterForm from './components/registerForm';
 import LoginForm from './components/loginForm';
+import Fluids from './components/fluids';
+import Tires from './components/tires';
 
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
@@ -20,14 +22,14 @@ class App extends Component {
       <React.Fragment>
         <ToastContainer />
         <NavBar />
-        <main className="container-fluid">
+        <main className="container">
           <Switch>
             <Route path="/home" component={Home} />
             <Route path="/spare-parts" component={SpareParts} />
             <Route path="/maintenance" component={Maintenance} />
-            <Route path="/tyres" component={SpareParts} />
+            <Route path="/tires" component={Tires} />
             <Route path="/batteries" component={SpareParts} />
-            <Route path="/fluids" component={SpareParts} />
+            <Route path="/fluids" component={Fluids} />
             <Route path="/request-service-quotation" component={SpareParts} />
             <Route path="/login" component={LoginForm} />
             <Route path="/register" component={RegisterForm} />

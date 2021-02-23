@@ -16,7 +16,7 @@ class NavBar extends Component {
                         <Nav.Link href="/spare-parts">Spare Parts</Nav.Link>
                         <Nav.Link href="/maintenance">Maintainance</Nav.Link>
                         <NavDropdown title="Accessories" id="collasible-nav-dropdown">
-                            <NavDropdown.Item href="/tyres">Tyres</NavDropdown.Item>
+                            <NavDropdown.Item href="/tires">Tyres</NavDropdown.Item>
                             <NavDropdown.Item href="/batteries">Batteries</NavDropdown.Item>
                             <NavDropdown.Item href="/fluids">Fluids</NavDropdown.Item>
                             <NavDropdown.Divider />

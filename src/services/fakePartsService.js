@@ -1,10 +1,11 @@
-//import * as categoryAPI from "./fakeGenreService";
+import _ from "lodash"
 
 const parts = [
     {
         _id: "5b21ca3eeb7f6fbccd4718151",
         title: "Oil Filter",
-        category: { _id: "5b21ca3eeb7f6fbccd4718181", name: "Filters" },
+        cat: "Filters",
+        compatibleCars: ["toyota-corolla-t4-2016"],
         numberInStock: 6,
         partNumber: 123456,
         price: 12
@@ -13,7 +14,8 @@ const parts = [
     {
         _id: "5b21ca3eeb7f6fbccd4718152",
         title: "Brake Pad - front",
-        category: { _id: "5b21ca3eeb7f6fbccd4718203", name: "Brakes" },
+        cat: "Brakes",
+        compatibleCars: ["toyota-corolla-t4-2016"],
         numberInStock: 3,
         partNumber: 234567,
         price: 10
@@ -22,55 +24,56 @@ const parts = [
     {
         _id: "5b21ca3eeb7f6fbccd4718153",
         title: "Light Bulb - High Beam - H7",
-        category: { _id: "5b21ca3eeb7f6fbccd4718184", name: "Lighting & Electrical" },
+        cat: "Lighting & Electrical",
+        compatibleCars: ["toyota-corolla-t4-2016"],
         numberInStock: 16,
         partNumber: 345678,
         price: 15
     },
     {
         _id: "5b21ca3eeb7f6fbccd4718154",
-        title: "Starter",
-        category: { _id: "5b21ca3eeb7f6fbccd4718206", name: "Starters & Alternators" },
+        title: "Engine Cover Sealant",
+        cat: "Engine",
+        compatibleCars: ["toyota-corolla-t4-2016"],
         numberInStock: 4,
         partNumber: 456789,
         price: 144,
-        currency: "AED"
     },
     {
         _id: "5b21ca3eeb7f6fbccd4718155",
-        title: "Starter",
-        category: { _id: "5b21ca3eeb7f6fbccd4718206", name: "Starters & Alternators" },
+        title: "light bulb",
+        cat: "Lighting & Electrical",
+        compatibleCars: ["toyota-corolla-t4-2016"],
         numberInStock: 4,
         partNumber: 456789,
         price: 144,
-        currency: "AED"
     },
     {
         _id: "5b21ca3eeb7f6fbccd4718156",
         title: "Starter",
-        category: { _id: "5b21ca3eeb7f6fbccd4718206", name: "Starters & Alternators" },
+        cat: "Starters & Alternators",
+        compatibleCars: ["toyota-corolla-t4-2016"],
         numberInStock: 4,
         partNumber: 456789,
         price: 144,
-        currency: "AED"
     },
     {
         _id: "5b21ca3eeb7f6fbccd4718157",
-        title: "Starter",
-        category: { _id: "5b21ca3eeb7f6fbccd4718206", name: "Starters & Alternators" },
+        title: "Spark Plug",
+        cat: "Starters & Alternators",
+        compatibleCars: ["toyota-corolla-t4-2016"],
         numberInStock: 4,
         partNumber: 456789,
         price: 144,
-        currency: "AED"
     },
     {
         _id: "5b21ca3eeb7f6fbccd4718158",
-        title: "Starter",
-        category: { _id: "5b21ca3eeb7f6fbccd4718206", name: "Starters & Alternators" },
+        title: "battery",
+        cat: "Batteries",
+        compatibleCars: ["toyota-corolla-t4-2016"],
         numberInStock: 4,
         partNumber: 456789,
         price: 144,
-        currency: "AED"
     }
 ]
 
@@ -78,12 +81,20 @@ export function getParts() {
     return parts;
 }
 
+export function getPartsCat() {
+    return _.uniq(parts.map(p => p.cat));
+}
 
 
-
-// { _id: "5b21ca3eeb7f6fbccd4718181", name: "Filters" },
-// { _id: "5b21ca3eeb7f6fbccd4718142", name: "Ignition" },
-// { _id: "5b21ca3eeb7f6fbccd4718203", name: "Brakes" },
-// { _id: "5b21ca3eeb7f6fbccd4718184", name: "Lighting & Electrical" },
-// { _id: "5b21ca3eeb7f6fbccd4718145", name: "Shock & Suspension" },
-// { _id: "5b21ca3eeb7f6fbccd4718206", name: "Starters & Alternators" }
+// export const partsCat = [
+//     { _id: "5b21ca3eeb7f6fbccd4718181", name: "Engine" },
+//     { _id: "5b21ca3eeb7f6fbccd4718202", name: "Brake & Suspension" },
+//      "Oils, Fluids & Filters" },
+//     "Body Parts" },
+//      "Batteries" },
+//    "Tires" },
+//     "Ignition" },
+//      "Streering" },
+//      "Lighting & Electrical" },
+//      Starters & Alternators
+// ];

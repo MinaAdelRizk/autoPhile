@@ -1,37 +1,38 @@
 import React, { Component } from 'react';
 
 import SearchBox from './searchBox';
-import ListGroup from "./common/listGroup";
 import PartsGrid from './partsGrid';
 import { paginate } from '../utils/paginate'
 import Pagination from './common/pagination'
+import VListGroup from './common/vListGroup';
 
-import { getCategories } from '../services/fakePartsCategoryService'
-import { getParts } from './../services/fakePartsService';
+import { getParts, getPartsCat } from './../services/fakePartsService';
+
+// import CarSelectMenu from './carSelectMenu'
+
 
 class SpareParts extends Component {
     state = {
         parts: [],
-        categories: [],
+        cat: [],
         searchQuery: "",
-        selectedCategory: null,
+        selectedCat: "All",
         currentPage: 1,
-        pageSize: 9,
-        currency: "AED",
+        pageSize: 8,
+        selectedCar: "" // undefined but defined in carSelectMenu
     };
-
     componentDidMount() {
         const parts = getParts();
-        const categories = [{ name: "All Products", _id: "" }, ...getCategories()]
-        this.setState({ categories, parts })
+        const cat = ["All", ...getPartsCat()]
+        this.setState({ cat, parts })
     };
 
     handleSearch = query => {
-        this.setState({ searchQuery: query, selectedCategory: null, currentPage: 1 });
+        this.setState({ searchQuery: query, selectedCat: "", currentPage: 1 });
     }
 
-    handleCategorySelect = category => {
-        this.setState({ selectedCategory: category, searchQuery: "", currentPage: 1 });
+    handleCatSelect = cat => {
+        this.setState({ selectedCat: cat, searchQuery: "", currentPage: 1 });
     };
 
     handlePageChange = (page) => {
@@ -47,57 +48,54 @@ class SpareParts extends Component {
     };
 
     getPageData = () => {
-        const { parts: allParts, searchQuery, selectedCategory, currentPage, pageSize } = this.state;
+        const { parts: allParts, searchQuery, selectedCat, currentPage, pageSize } = this.state;
 
         let data = allParts;
 
-        if (searchQuery !== "") {
-            data = allParts.filter(p => p.title.toLowerCase().startsWith(searchQuery.toLowerCase()));
+        data = (searchQuery !== "") ? data.filter(p => p.title.toLowerCase().startsWith(searchQuery.toLowerCase())) : data;
 
-        }
-        else if (selectedCategory && selectedCategory._id)
-            data = allParts.filter(p => p.category._id === selectedCategory._id);
+        data = (selectedCat && selectedCat !== "All") ? data.filter(p => p.cat === selectedCat) : data;
 
-        const paginatedData = paginate(data, currentPage, pageSize);
+        data = paginate(data, currentPage, pageSize);
 
-        return { count: data.length, data: paginatedData };
+        return { count: allParts.length, data };
 
 
     }
 
     render() {
+
         const { count, data } = this.getPageData();
-        const { searchQuery, pageSize, currentPage, currency } = this.state;
+        const { cat, selectedCat, searchQuery, pageSize, currentPage } = this.state;
+
         return (
             <div className="row">
                 <div className="col-2 sideBar">
+                    <VListGroup
+                        items={cat}
+                        selectedItem={selectedCat}
+                        onItemSelect={this.handleCatSelect}
+                    />
+                </div>
+
+                <div className="col-10 my-1">
+
                     <SearchBox
                         value={searchQuery}
                         onChange={this.handleSearch}
                     />
 
-                    <ListGroup
-                        items={this.state.categories}
-                        selectedItem={this.state.selectedCategory}
-                        onItemSelect={this.handleCategorySelect}
-                    />
-                </div>
-
-                <div className="col-10 ">
                     <PartsGrid
-                        parts={data}
+                        items={data}
                         onLike={this.handleLike}
-                        currency={currency}
                     />
 
-                    <div className="row" style={{ marginTop: 20 }}>
-                        <Pagination
-                            itemsCount={count}
-                            pageSize={pageSize}
-                            onPageChange={this.handlePageChange}
-                            currentPage={currentPage}
-                        />
-                    </div>
+                    <Pagination
+                        itemsCount={count}
+                        pageSize={pageSize}
+                        onPageChange={this.handlePageChange}
+                        currentPage={currentPage}
+                    />
                 </div>
 
             </div >

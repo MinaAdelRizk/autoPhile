@@ -7,13 +7,12 @@ class CarSelectMenu extends Component {
     state = {
         cars: [],//all cars
         carMakeOptions: [],//all cars Make Key
-        selectedMakeId: "", //make _id
-        selectedMakeModels: [],//models based on Make selection
+        makeModels: [],//models based on Make selection
         selectedModelId: "", // model _id
         selectedModelTrims: [], // Trims based on Moake & Model selection
         selectedTrim: "",//selected Trim
-        selectedCar: "", //"models_id + trim_id"
-        selectedYear: ""
+        selectedYear: "",
+        selectedCar: "" //"models_id + trim_id"
     }
 
     componentDidMount() {
@@ -22,41 +21,45 @@ class CarSelectMenu extends Component {
         this.setState({ cars, carMakeOptions })
     }
 
-    handleMakeChange = ({ currentTarget: input }) => {
-        const selectedMakeId = input.value;
-        let selectedMakeModels = getModels(selectedMakeId);
-        selectedMakeModels = selectedMakeModels[0].models;
-        this.setState({ selectedMakeModels, selectedMakeId });
-    }
-
-    handleModelChange = ({ currentTarget: input }) => {
-        const selectedModelId = input.value;
-        const models = [...this.state.selectedMakeModels]
-        let selectedModelTrims = models.filter(m => m._id === selectedModelId)
-        selectedModelTrims = selectedModelTrims[0].trim;
-        this.setState({ selectedModelTrims, selectedModelId });
-    }
-
-    handleTrimChange = ({ currentTarget: input }) => {
-        const { selectedModelId, selectedYear } = this.state;
-        const selectedTrim = input.value;
-        const selectedCar = `${selectedModelId}-${selectedTrim}-${selectedYear}`
-        console.log(selectedCar)
-        this.setState({ selectedTrim, selectedCar });
-    }
-
     handleYearChange = ({ currentTarget: input }) => {
         const selectedYear = input.value;
         this.setState({ selectedYear })
     }
 
+    handleMakeChange = ({ currentTarget: input }) => {
+        const selectedMake = input.value;
+        let makeModels = getModels(selectedMake);
+        this.setState({ makeModels, selectedMake });
+    }
+
+    handleModelChange = ({ currentTarget: input }) => {
+        const selectedModel = input.value;
+        const makeModels = [...this.state.makeModels]
+        makeModels.filter(m => m.name === selectedModel)
+        let modelTrims = makeModels[0].trim
+        this.setState({ modelTrims, selectedModel });
+    }
+
+    handleTrimChange = ({ currentTarget: input }) => {
+        const selectedTrim = input.value;
+        this.setState({ selectedTrim });
+    }
+
+    populateCar = (mk, md, tr, yr) => {
+        const selectedCar = `${mk} ${md} ${tr} ${yr}`
+        console.log(selectedCar)
+        this.setState({ selectedCar })
+    }
+
     render() {
         const {
             carMakeOptions,
-            selectedMakeId,
-            selectedMakeModels,
-            selectedModelId,
-            selectedModelTrims,
+            selectedMake,
+            makeModels,
+            selectedModel,
+            modelTrims,
+            selectedTrim,
+            selectedYear
         } = this.state;
 
         return (
@@ -75,25 +78,28 @@ class CarSelectMenu extends Component {
                 />
 
                 {
-                    selectedMakeId && <Select
+                    selectedMake && <Select
                         name="models"
                         label="Select Model"
-                        options={selectedMakeModels}
+                        options={makeModels}
                         onChange={this.handleModelChange}
                     />
                 }
 
                 {
-                    selectedModelId && <Select
+                    selectedModel && <Select
                         name="trim"
                         label="Select Trim "
-                        options={selectedModelTrims}
+                        options={modelTrims}
                         onChange={this.handleTrimChange}
                     />
                 }
+
+                {selectedTrim && <button onClick={() => this.populateCar(selectedMake, selectedModel, selectedTrim, selectedYear)} className="btn btn-primary m-3">Save</button>}
             </div >
         );
     }
 }
+
 
 export default CarSelectMenu;

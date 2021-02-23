@@ -4,7 +4,8 @@ import Like from './common/like';
 class ProductCard extends Component {
 
     render() {
-        const { title, partNumber, price, currency, onLike, part } = this.props;
+        const { onLike, item: i } = this.props;
+
         return (
             <React.Fragment>
                 <div className="card">
@@ -13,20 +14,33 @@ class ProductCard extends Component {
                     </div>
                     <div className="card-body">
                         <h5 className="card-title">
-                            {title}
+                            {i.title}
                         </h5>
-                        <p className="card-text">
-                            Card description goes here in p tag
-                            Part Number: {partNumber} {<br />}
-                            Price: {price} {currency}
-                        </p>
+                        <ul className="card-text">
+                            <li>Price: {i.price}</li>
+
+                            {i.mnf && <li>Manufacturer: {i.mnf}</li>}
+
+                            {/* Parts Related */}
+                            {i.partNumber && <li>Part Number: {i.partNumber}</li>}
+
+                            {/* Fluids Related */}
+                            {i.vsc && <li>Viscosity: {i.vsc}</li>}
+
+                            {/* tires related */}
+                            {i.width && <li>W: P{i.width} mm H: {i.height}</li>}
+                            {i.rim && <li>Rim Diamiter: R{i.rim}</li>}
+                            {i.y && <li>Year: {i.y}</li>}
+                        </ul>
                         <div className="card-footer">
-                            <button className="btn btn-primary btn-sm">Add to Cart</button>
-                            <Like liked={part.liked} onClick={() => onLike(part)} />
+                            <button className="btn btn-primary btn-sm">Add To
+                            <i className="fa fa-cart-plus m-1" aria-hidden="true"></i>
+                            </button>
+                            <Like liked={i.liked} onClick={() => onLike(i)} />
                         </div>
                     </div>
                 </div>
-            </React.Fragment>
+            </React.Fragment >
         );
     }
 }
