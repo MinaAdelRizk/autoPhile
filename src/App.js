@@ -17,8 +17,6 @@ import { ToastContainer } from 'react-toastify';
 import { useEffect, useState } from 'react';
 import './App.css';
 
-
-
 let selectedCar = localStorage.getItem('selectedCar');
 
 // let userName = localStorage.getItem("name")
@@ -35,7 +33,7 @@ function App() {
 
   return (
 
-    < React.Fragment >
+    < React.Fragment>
 
       <ToastContainer />
 

@@ -7,20 +7,59 @@
 }
 
 .page-holder {
-  background-image: ulr("./road.jpg");
-  padding-top: 3rem;
+  /* background-image: url("./road.jpg") ; */
+  color: antiquewhite;
+  padding: 0px !important;
 }
 
+.home-page{
+  background-image: url("./home-bg.jpg");
+  background-size: cover;
+  min-height: 500px;
+  height: auto;
+  display: flex;
+}
+
+.home-shade{
+  background-color: #222629e6;
+  padding: 1rem;
+  margin: 10px auto;
+}
 .ReactModal__Overlay { z-index: 1000 }
 
 .selected-car-holder {
   color: white ;
-  margin-top: 15px;
+  margin: 0 1rem;
+}
+
+.home-list {
+  list-style-type: disclosure-closed;
 }
 
 .searchBar {
   min-width: 125px;
+  max-width: 250px;
 }  
+
+.section {
+  display: inline-flex;
+  margin-top: 2rem;
+  padding: 1rem;
+}
+
+.service-content {
+  background: rebeccapurple;
+  max-width: 30% !important;
+  margin: auto;
+}
+.sevice-title{
+  text-align: center;
+  padding-top: 1rem;
+}
+.service-desc {
+  padding: 1rem;
+}
+
 .list-group-item {
   padding: 0.5rem 0.25rem !important;
   margin: .25rem;
