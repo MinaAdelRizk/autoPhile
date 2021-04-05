@@ -1,10 +1,15 @@
-import React, { Component } from 'react';
+import React from 'react';
+import CarSelMenu from './CarSelMenu';
 
-class Home extends Component {
-    state = {}
-    render() {
-        return (<h1>Home Page</h1>);
-    }
+const Home = () => {
+
+    return (
+        <div>
+            <h1>Home Page</h1>
+            <CarSelMenu />
+        </div >
+    );
+
 }
 
 export default Home;

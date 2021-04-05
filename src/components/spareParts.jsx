@@ -85,6 +85,8 @@ class SpareParts extends Component {
                         onChange={this.handleSearch}
                     />
 
+                    <h3>Every car and it's parts, not every part and it's cars</h3>
+
                     <PartsGrid
                         items={data}
                         onLike={this.handleLike}

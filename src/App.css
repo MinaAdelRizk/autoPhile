@@ -6,17 +6,31 @@
   justify-content: center;
 }
 
+.page-holder {
+  background-image: ulr("./road.jpg");
+  padding-top: 3rem;
+}
+
 .ReactModal__Overlay { z-index: 1000 }
+
+.selected-car-holder {
+  color: white ;
+  margin-top: 15px;
+}
 
 .searchBar {
   min-width: 125px;
 }  
 .list-group-item {
   padding: 0.5rem 0.25rem !important;
+  margin: .25rem;
   border-bottom: 1px solid rgba(0, 0, 0, 0.125) !important;
   font-size: 1rem;
   font-weight: bold;
   font-family: inherit;
+  display: flex !important;
+  align-items: center;
+  border-radius: 5px;
   
 }  
 .vertical-list { border: none !important;}

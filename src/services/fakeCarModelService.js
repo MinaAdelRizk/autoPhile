@@ -19,10 +19,6 @@ export const cars = [
             {
                 name: "C30", trim: [
                     { name: "T4" }, { name: 'T6' }]
-            },
-            {
-                name: "S60", trim: [
-                    { name: "T4" }, { name: 'T6' }]
             }
         ]
     },
@@ -233,11 +229,21 @@ export function getCars() {
 }
 
 export function getCarMakeOptions() {
-    return cars.map(car => car.make);
+    let makes = cars.map(car => car.make); //Not used
+    return makes;
 }
 
 export function getModels(selectedMake) {
     let makeModels = cars.filter(car => car.make.name === selectedMake);
-    makeModels = _.uniq(makeModels.map(m => m.models))
+    makeModels = _.uniq(makeModels.map(m => m.models)) // no use
     return makeModels[0];
+}
+
+export function getTrims(make, model) {
+    let makeModels = cars.filter(car => car.make.name === make);
+    makeModels = makeModels[0].models
+    let modelTrims = makeModels.filter(mm => mm.name === model)
+    modelTrims = _.uniq(modelTrims.map(m => m.trim))
+    let options = modelTrims[0]
+    return options
 }

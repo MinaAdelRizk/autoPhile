@@ -2,7 +2,7 @@ import React from 'react';
 
 const YearPicker = ({ name, label, ...rest }) => {
 
-    let minOffset = 0, maxOffset = 30;
+    let minOffset = 0, maxOffset = 20;
     let thisYear = (new Date()).getFullYear();
     let allYears = [];
 

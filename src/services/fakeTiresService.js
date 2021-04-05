@@ -20,7 +20,7 @@ export const tires = [
         y: 2019,
         lindex: 70,
         price: 10,
-        title: "Michelene Tire 215/55/16"
+        title: "Continental Tire 215/55/16"
     },
     {
         _id: "5b21ca3eeb7f6fbccd47181811",
@@ -46,14 +46,14 @@ export const tires = [
     },
     {
         _id: "5b21ca3eeb7f6fbccd47181813",
-        mnf: "Michlene",
+        mnf: "GoodYear",
         width: 225,
         height: 50,
         rim: 18,
         y: 2019,
         lindex: 70,
         price: 10,
-        title: "Michelene Tire 215/55/16"
+        title: "GoodYear Tire 215/55/16"
     },
     {
         _id: "5b21ca3eeb7f6fbccd47181814",

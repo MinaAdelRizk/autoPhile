@@ -45,7 +45,7 @@ class Fluids extends Component {
         const { fluids: allFluids, selectedMnf, selectedVsc } = this.state;
         let data = allFluids;
 
-        data = selectedMnf && (selectedMnf !== "All") ? data.filter(f => f.mnf === selectedMnf) : allFluids;
+        data = selectedMnf && (selectedMnf !== "All") ? data.filter(f => f.mnf === selectedMnf) : data;
 
         data = selectedVsc && (selectedVsc !== "All") ? data.filter(f => f.vsc === selectedVsc) : data;
 

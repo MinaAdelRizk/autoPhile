@@ -6,7 +6,7 @@ const PartsGrid = ({ items, ...rest }) => {
 
     return (
         <div className="card-columns" >
-            {items.map(item => <ProductCard
+            { items.length < 1 ? "No Results Found" : items.map(item => <ProductCard
                 key={item._id}
                 item={item}
                 {...rest}

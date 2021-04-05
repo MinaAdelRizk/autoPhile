@@ -1,24 +1,26 @@
 import React, { Component } from 'react';
 import Select from './common/select';
 import YearPicker from './common/yearPicker';
-import { getModels, getCars, getCarMakeOptions } from '../services/fakeCarModelService';
+import { getModels, getCarMakeOptions } from '../services/fakeCarModelService';
 
 class CarSelectMenu extends Component {
+
     state = {
-        cars: [],//all cars
         carMakeOptions: [],//all cars Make Key
         makeModels: [],//models based on Make selection
         selectedModelId: "", // model _id
         selectedModelTrims: [], // Trims based on Moake & Model selection
         selectedTrim: "",//selected Trim
         selectedYear: "",
-        selectedCar: "" //"models_id + trim_id"
+        selectedCar: "Volvoooo" //"models_id + trim_id"
     }
 
+
+
     componentDidMount() {
-        const cars = getCars();
         const carMakeOptions = getCarMakeOptions()
-        this.setState({ cars, carMakeOptions })
+        console.log(this.state.selectedCar)
+        this.setState({ carMakeOptions })
     }
 
     handleYearChange = ({ currentTarget: input }) => {
@@ -47,9 +49,9 @@ class CarSelectMenu extends Component {
 
     populateCar = (mk, md, tr, yr) => {
         const selectedCar = `${mk} ${md} ${tr} ${yr}`
-        console.log(selectedCar)
         this.setState({ selectedCar })
     }
+
 
     render() {
         const {
@@ -59,11 +61,13 @@ class CarSelectMenu extends Component {
             selectedModel,
             modelTrims,
             selectedTrim,
-            selectedYear
+            selectedYear,
         } = this.state;
 
         return (
+
             <div>
+
                 <YearPicker
                     name="year"
                     label="Select Year"
@@ -95,8 +99,11 @@ class CarSelectMenu extends Component {
                     />
                 }
 
-                {selectedTrim && <button onClick={() => this.populateCar(selectedMake, selectedModel, selectedTrim, selectedYear)} className="btn btn-primary m-3">Save</button>}
+                {selectedTrim && <button
+                    onClick={() => this.populateCar(selectedMake, selectedModel, selectedTrim, selectedYear)}
+                    className="btn btn-primary m-3">Save</button>}
             </div >
+
         );
     }
 }
