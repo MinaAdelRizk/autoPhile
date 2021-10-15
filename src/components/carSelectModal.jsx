@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import Modal from 'react-modal';
 
-import CarSelMenu from './CarSelMenu';
+import CarMenu from './carMenu';
+
 
 Modal.setAppElement("#root")
 
@@ -26,7 +27,7 @@ const CarSelectModal = ({ btnName, selectedCar }) => {
 
                 <div className="modalBody">
 
-                    <CarSelMenu />
+                    <CarMenu />
 
                 </div>
 

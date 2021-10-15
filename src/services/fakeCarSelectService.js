@@ -12,6 +12,6 @@ export const make = [
     { _id: "5b21ca3eeb7f6fbccd4718189", name: "Mini" },
 ];
 
-export function getCars() {
+export function getMakes() {
     return make.filter(g => g);
 }

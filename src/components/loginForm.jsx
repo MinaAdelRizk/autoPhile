@@ -23,12 +23,15 @@ class LoginForm extends Form {
   doSubmit = async () => {
 
     try {
+
       const { data } = this.state;
       const { state } = this.props.location;
       await auth.login(data.username, data.password);
       window.location = state ? state.from.pathname : '/';
+
     } catch (ex) {
-      if (ex.response && ex.response.status === 400) {
+
+      if (ex.response.status === 400) {
         const errors = { ...this.state.errors };
         errors.username = ex.response.data;
         this.setState({ errors })
@@ -48,6 +51,8 @@ class LoginForm extends Form {
           {this.renderInput("password", "Password", "password")}
           {this.renderButton("Login")}
         </form>
+        <p>Supplier terms and conditions:
+          A-1 supply required part as requested upon a consumer order as per the described sale commition decribed in the table of categories and suppliers</p>
       </div>
     );
   }

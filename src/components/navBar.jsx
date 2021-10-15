@@ -18,8 +18,10 @@ const NavBar = ({ selectedCar, user }) => {
             <Navbar.Collapse id="responsive-navbar-nav">
                 <Nav className="mr-auto">
                     <Nav.Link href="/spare-parts">Spare Parts</Nav.Link>
+                    {/* <Link to="/courses" replace />parts */}
+                    {/* clicking the link will replace the current entry in the history stack instead of adding a new one. */}
                     <Nav.Link href="/maintenance">Maintainance</Nav.Link>
-                    <NavDropdown title="Accessories" id="collasible-nav-dropdown">
+                    <NavDropdown title="Quick Services / Replacements" id="collasible-nav-dropdown">
                         <NavDropdown.Item href="/tires">Tyres</NavDropdown.Item>
                         <NavDropdown.Item href="/batteries">Batteries</NavDropdown.Item>
                         <NavDropdown.Item href="/fluids">Fluids</NavDropdown.Item>
@@ -44,7 +46,9 @@ const NavBar = ({ selectedCar, user }) => {
                 {user &&
                     <Nav>
                         <Nav.Link href="/profile">{user.name}</Nav.Link>
+                        {user.isSeller && <Nav.Link href="/profile">{user.sellerName}</Nav.Link>}
                         <Nav.Link href="/" onClick={auth.logout}> Log Out </Nav.Link>
+
                     </Nav>
                 }
 

@@ -6,10 +6,15 @@
   justify-content: center;
 }
 
+/* page-content includes the side bar and the right side items grid */
+.page-content {
+  display: inline-flex;
+}
 .page-holder {
   /* background-image: url("./road.jpg") ; */
-  color: antiquewhite;
+  
   padding: 0px !important;
+  margin-top: 1rem;
 }
 
 .home-page{
@@ -18,6 +23,8 @@
   min-height: 500px;
   height: auto;
   display: flex;
+  color: antiquewhite;
+  margin-top: -1rem;
 }
 
 .home-shade{
@@ -33,23 +40,24 @@
 }
 
 .home-list {
-  list-style-type: disclosure-closed;
+  list-style-type: circle;
 }
 
 .searchBar {
   min-width: 125px;
-  max-width: 250px;
+  max-width: 350px;
 }  
 
 .section {
   display: inline-flex;
-  margin-top: 2rem;
+  margin-top: 1rem;
   padding: 1rem;
 }
 
 .service-content {
-  background: rebeccapurple;
+  background: #0077ff1a;
   max-width: 30% !important;
+  border-radius: 5px;
   margin: auto;
 }
 .sevice-title{
@@ -57,9 +65,20 @@
   padding-top: 1rem;
 }
 .service-desc {
-  padding: 1rem;
+  padding: 1rem 0rem;
+} .service-desc ul {
+  list-style-type: disclosure-closed; 
+  margin: 0 auto;
 }
-
+.service-link {
+  text-decoration: none;
+  color:#ffc107;
+  float: right;
+  padding: .35rem !important;
+} .service-link:hover {
+  text-decoration: none;
+  color: yellow;
+}
 .list-group-item {
   padding: 0.5rem 0.25rem !important;
   margin: .25rem;
@@ -84,7 +103,7 @@
 }
 .productImageBox {
   min-width: 200px;
-  height: 200px;
+  min-height: 160px;
   background-color: lightcoral;
 }
 

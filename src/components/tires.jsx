@@ -84,7 +84,7 @@ class Tires extends Component {
         const divider = <hr className="my-0" style={{ background: "#ffc107" }} />;
 
         return (
-            <div className="row">
+            <div className="page-content">
 
                 <div className="col-2">
                     <VListGroup

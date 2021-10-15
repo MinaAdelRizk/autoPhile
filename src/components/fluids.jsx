@@ -1,25 +1,37 @@
 import React, { Component } from 'react';
-import { getFluids, getFluidsMnf, getVsc } from '../services/fakeFluidsService';
+import { deleteFluid, getFluids, getMnf } from '../services/fluidsService';
+import auth from '../services/authService'
 import PartsGrid from './partsGrid';
 import HListGroup from "./common/hListGroup"
 import VListGroup from './common/vListGroup';
+import _ from 'underscore'
+import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 class Fluids extends Component {
     state = {
         fluids: [],
-        manufacturers: [],
+        mnf: [],
         selectedMnf: "All",
-        viscosities: [],
-        selectedVsc: "All"
+        vsc: [],
+        selectedVsc: "All",
+        user: {}
     }
 
-    componentDidMount() {
-        const fluids = getFluids();
-        const manufacturers = getFluidsMnf()
-        manufacturers.unshift("All")
-        const viscosities = getVsc()
-        viscosities.push("All")
-        this.setState({ fluids, manufacturers, viscosities })
+    async componentDidMount() {
+
+        let { data } = await getFluids()
+        let fluids = data
+
+        let mnf = _.uniq(fluids.map(f => f.mnf))
+        mnf.unshift("All")
+
+        let vsc = _.uniq(fluids.map(f => f.vsc))
+        vsc.unshift("All")
+
+        let user = auth.getCurrentUser()
+
+        this.setState({ fluids, mnf, vsc, user })
     }
 
     // prestashop
@@ -41,8 +53,15 @@ class Fluids extends Component {
         this.setState({ fluids })
     }
 
+    handleDelete = item => {
+        deleteFluid(item)
+        toast.success("Fluid Deleted Successfully");
+        function redirect() { window.location = "/fluids" }
+        setTimeout(redirect, 1000);
+    }
     getPageData = () => {
         const { fluids: allFluids, selectedMnf, selectedVsc } = this.state;
+
         let data = allFluids;
 
         data = selectedMnf && (selectedMnf !== "All") ? data.filter(f => f.mnf === selectedMnf) : data;
@@ -53,19 +72,17 @@ class Fluids extends Component {
     }
 
 
-
     render() {
 
         const { fluids } = this.getPageData();
-
-        const { manufacturers, selectedMnf, viscosities, selectedVsc } = this.state;
+        const { mnf, selectedMnf, vsc, selectedVsc, user } = this.state;
 
         return (
-            <div className="row">
+            <div className="page-content">
 
                 <div className="col-2">
                     <VListGroup
-                        items={manufacturers}
+                        items={mnf}
                         selectedItem={selectedMnf}
                         onItemSelect={this.handleManufacturerSelect}
                     />
@@ -73,9 +90,10 @@ class Fluids extends Component {
 
                 <div className="col-10 my-1">
 
+                    {user ? user.isSeller && <Link to="/addFluid">Add Fluid</Link> : null}
+
                     <HListGroup
-                        title="Viscosity: "
-                        items={viscosities}
+                        items={vsc}
                         selectedItem={selectedVsc}
                         onItemSelect={this.handleViscocitySelect}
                     />
@@ -83,6 +101,8 @@ class Fluids extends Component {
                     <PartsGrid
                         items={fluids}
                         onLike={this.handleLike}
+                        onDelete={this.handleDelete}
+                        user={user}
                     />
                 </div>
 

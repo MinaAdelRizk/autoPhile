@@ -1,20 +1,35 @@
 import React, { useEffect, useState, useRef } from 'react';
 
 import _ from "lodash"
-import Select from './common/select'
+import { getMakes } from '../services/carMakeService';
+import { getModels, getTrims } from '../services/fakeCarModelService'
+import auth from '../services/authService'
+import jwtDecode from 'jwt-decode';
+import { updateCar } from '../services/userService';
+import SearchBox from './searchBox';
 import YearPicker from './common/yearPicker';
-import { getCars } from './../services/fakeCarModelService';
+import Select from './common/select'
+
 
 // import http from '../services/httpService'
 // import auth from '../services/authService';
 
-function CarSelMenu(props) {
+function CarSelMenu() {
 
-    let cars = useRef(getCars()) //externally from fakeCarModelService
+    const [user, setUser] = useState(null)
+    let jwt = localStorage.getItem("token")
 
-    let [makes, setMakes] = useState([])
-    let [models, setModels] = useState(null)
-    let [trims, setTrims] = useState(null)
+    useEffect(() => {
+        let user = auth.getCurrentUser()
+        setUser(user)
+    }, []);
+
+    // let makes = useRef(getMakes()) //externally from fakeCarModelService
+    let [searchQuery, setSearchQuery] = useState("")
+
+    let [makeOptions, setMakeOptions] = useState([])
+    let [makeModels, setMakeModels] = useState([])
+    let [modelTrims, setModelTrims] = useState(null)
 
     let [make, setMake] = useState("")
     let [model, setModel] = useState("")
@@ -23,36 +38,29 @@ function CarSelMenu(props) {
 
     let [selectedCar, setCar] = useState("Select Your Car!");
 
-    useEffect(() => {
-        let makes = cars.current.map(car => car.make)
-        setMakes(makes)
+    useEffect(async () => {
+        makeOptions = await getMakes()
+        console.log(makeOptions)
+        setMakeOptions(makeOptions)
     }, []);
 
-    useEffect(() => {
-        console.log(selectedCar)
-    }, [selectedCar]);
+    // useEffect(() => {
+    //     makeModels = getModels(make)
+    // }, []);
 
     function handleMakeChange({ currentTarget: input }) {
-        const selectedMake = input.value;
-        setMake(make = selectedMake)// updating make to the selected Mak
-        populateModels(selectedMake); // Populate the Model / next
-    }
-
-    function populateModels(selectedMake) {
-        let models = cars.current.filter(car => car.make.name === selectedMake);
-        models = _.uniq(models.map(m => m.models))
-        setModels(models[0])
+        make = input.value
+        setMake(make)
+        makeModels = getModels(make)
+        setMakeModels(makeModels)
     }
 
     function handleModelChange({ currentTarget: input }) {
-        const model = input.value;
-        populateTrims(model)
+        model = input.value;
         setModel(model)
-    }
-
-    function populateTrims(model) {
-        let trims = models.filter(m => m.name === model)[0].trim
-        setTrims(trims)
+        makeModels = makeModels.filter(m => m._id == model)
+        modelTrims = _.uniq(makeModels.map(t => t.trim)[0])
+        setModelTrims(modelTrims)
     }
 
     function handleTrimChange({ currentTarget: input }) {
@@ -65,37 +73,75 @@ function CarSelMenu(props) {
         setYear(year)
     }
 
-    let populateCar = (mk, md, tr, yr) => {
-        selectedCar = `${mk} ${md} ${tr} ${yr}`
-        localStorage.setItem('selectedCar', selectedCar)
+    let populateCar = async (mk, md, tr, yr) => {
+        selectedCar = `${mk} ${md} ${tr} ${yr}`;
+
+        const user = jwtDecode(jwt)
+
+        user.selectedCar = selectedCar
+        // localStorage.setItem('selectedCar', selectedCar)
+        // console.log(user.selectedCar)
+        await updateCar(user, selectedCar)
         setCar(selectedCar);
-        window.location = "/home"
+        // window.location = "/home"
     }
 
+    const handleSearch = (query) => {
+        console.log("Query", query)
+        setSearchQuery(query)
+        makeOptions = searchQuery && makeOptions.filter(m => m.name.toLowerCase().startsWith(searchQuery.toLowerCase()))
+        if (makeOptions.length == 1) setMake(makeOptions[0]._id)
+        console.log(searchQuery)
+        console.log(makeOptions)
+        // make && setMakeModels(getModels(make._id))
+        // console.log("Make Models is", makeModels)
+        // makeOptions = makeOptions.filter(m => m.name == query)
+        // setMake(makeOptions[0])
+        // console.log("result", make)
+        // console.log("models", makeModels)
 
+        // if (makes.length == 1) setMake(makes[0].name)
+        // console.log(make)
+        // handleMakeChange(query)
+    }
 
     return (
         <div>
-
-            <Select
-                name="make"
-                label="Select Make"
-                options={makes}
+            <SearchBox
+                value={searchQuery}
+                // onChange={handleSearch}
                 onChange={handleMakeChange}
+                optionsList={makeOptions}
+                listName="Select Make"
+            // onChange={handleMakeSelect}
             />
 
-            {(models !== null) && <Select
-                name="model"
-                label="Select Model"
-                options={models}
-                onChange={handleModelChange}
-            />}
+            {/* {this.renderSelect("make", "SelectMake", { makes: makeOptions })} */}
+            {/* <Select
+                name="make"
+                label="Select Make"
+                options={makeOptions}
+                onChange={handleMakeChange}
+            /> */}
+            {/* <SelectFilter
+                name="make"
+                label="Select Make"
+                options={makeOptions}
+                onChange={handleMakeChange}
+            /> */}
+            {/* {make &&
+                <Select
+                    name="model"
+                    label="Select Model"
+                    options={makeModels}
+                    onChange={handleModelChange}
+                />}
 
 
-            {trims && <Select
+            {model && <Select
                 name="trim"
                 label="Select Trim"
-                options={trims}
+                options={modelTrims}
                 onChange={handleTrimChange}
             />}
 
@@ -107,7 +153,7 @@ function CarSelMenu(props) {
 
             {year && <button
                 onClick={() => populateCar(make, model, trim, year)}
-                className="btn btn-primary m-3">Save</button>}
+                className="btn btn-primary m-3">Save</button>} */}
 
         </div >
     )

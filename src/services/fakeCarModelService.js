@@ -2,28 +2,28 @@ import _ from "lodash"
 
 export const cars = [
     {
-        make: { name: "Volvo" },
+        make: { name: "Volvo", _id: "5b21ca3eeb7f6fbccd4718181" },
         models: [
             {
-                name: "S60", trim: [
+                name: "S60", _id: "5b21ca3eeb7f6fbccd4718202", trim: [
                     { name: "T4" }, { name: 'T5' }, { name: 'T6' }]
             },
             {
-                name: "S80", trim: [
+                name: "S80", _id: "5b21ca3eeb7f6fbccd4718204", trim: [
                     { name: "T4" }, { name: 'T6' }]
             },
             {
-                name: "XC70", trim: [
+                name: "XC70", _id: "5b21ca3eeb7f6fbccd4718255", trim: [
                     { name: "T4" }, { name: 'T6' }]
             },
             {
-                name: "C30", trim: [
+                name: "C30", _id: "5b21ca3eeb7f6fbccd4718206", trim: [
                     { name: "T4" }, { name: 'T6' }]
             }
         ]
     },
     {
-        make: { name: "Toyota" },
+        make: { name: "Toyota", _id: "5b21ca3eeb7f6fbccd4718202" },
         models: [
             {
                 name: "Yaris", trim: [
@@ -48,7 +48,7 @@ export const cars = [
         ]
     },
     {
-        make: { name: "Nissan" },
+        make: { name: "Nissan", _id: "5b21ca3eeb7f6fbccd4718183" },
         models: [
             {
                 name: "Altima", trim: [
@@ -73,7 +73,7 @@ export const cars = [
         ]
     },
     {
-        make: { name: "Honda" },
+        make: { name: "Honda", _id: "5b21ca3eeb7f6fbccd4718184" },
         models: [
             {
                 name: "Civic", trim: [
@@ -98,7 +98,7 @@ export const cars = [
         ]
     },
     {
-        make: { name: "Lexus" },
+        make: { name: "Lexus", _id: "5b21ca3eeb7f6fbccd4718185" },
         models: [
             {
                 name: "S60", trim: [
@@ -123,7 +123,57 @@ export const cars = [
         ]
     },
     {
-        make: { name: "Infinity" },
+        make: { name: "Infinity", _id: "5b21ca3eeb7f6fbccd4718186" },
+        models: [
+            {
+                name: "XS1", trim: [
+                    { name: "T4" }, { name: 'T6' }]
+            },
+            {
+                name: "SKI ", trim: [
+                    { name: "T4" }, { name: 'T6' }]
+            },
+            {
+                name: "WXInf", trim: [
+                    { name: "T4" }, { name: 'T6' }]
+            },
+            {
+                name: "ISN", trim: [
+                    { name: "T4" }, { name: 'T6' }]
+            },
+            {
+                name: "S60", trim: [
+                    { name: "T4" }, { name: 'T6' }]
+            }
+        ]
+    },
+    {
+        make: { name: "Mercedes", _id: "5b21ca3eeb7f6fbccd4718147" },
+        models: [
+            {
+                name: "C200", trim: [
+                    { name: "T4" }, { name: 'T6' }]
+            },
+            {
+                name: "E200", trim: [
+                    { name: "T4" }, { name: 'T6' }]
+            },
+            {
+                name: "GLS200", trim: [
+                    { name: "T4" }, { name: 'T6' }]
+            },
+            {
+                name: "ELS300", trim: [
+                    { name: "T4" }, { name: 'T6' }]
+            },
+            {
+                name: "S600", trim: [
+                    { name: "T4" }, { name: 'T6' }]
+            }
+        ]
+    },
+    {
+        make: { name: "BMW", _id: "5b21ca3eeb7f6fbccd4718188" },
         models: [
             {
                 name: "S60", trim: [
@@ -148,57 +198,7 @@ export const cars = [
         ]
     },
     {
-        make: { name: "Mercedes" },
-        models: [
-            {
-                name: "S60", trim: [
-                    { name: "T4" }, { name: 'T6' }]
-            },
-            {
-                name: "S80", trim: [
-                    { name: "T4" }, { name: 'T6' }]
-            },
-            {
-                name: "XC70", trim: [
-                    { name: "T4" }, { name: 'T6' }]
-            },
-            {
-                name: "C30", trim: [
-                    { name: "T4" }, { name: 'T6' }]
-            },
-            {
-                name: "S60", trim: [
-                    { name: "T4" }, { name: 'T6' }]
-            }
-        ]
-    },
-    {
-        make: { name: "BMW" },
-        models: [
-            {
-                name: "S60", trim: [
-                    { name: "T4" }, { name: 'T6' }]
-            },
-            {
-                name: "S80", trim: [
-                    { name: "T4" }, { name: 'T6' }]
-            },
-            {
-                name: "XC70", trim: [
-                    { name: "T4" }, { name: 'T6' }]
-            },
-            {
-                name: "C30", trim: [
-                    { name: "T4" }, { name: 'T6' }]
-            },
-            {
-                name: "S60", trim: [
-                    { name: "T4" }, { name: 'T6' }]
-            }
-        ]
-    },
-    {
-        make: { name: "Mini" },
+        make: { name: "Mini", _id: "5b21ca3eeb7f6fbccd4718189" },
         models: [
             {
                 name: "S60", trim: [
@@ -228,22 +228,19 @@ export function getCars() {
     return cars.filter(m => m);
 }
 
-export function getCarMakeOptions() {
-    let makes = cars.map(car => car.make); //Not used
-    return makes;
-}
+// export function getCarMakeOptions() {
+//     let makes = cars.map(car => car.make); //Not used
+//     return makes;
+// }
 
-export function getModels(selectedMake) {
-    let makeModels = cars.filter(car => car.make.name === selectedMake);
+export function getModels(selectedMakeId) {
+    let makeModels = cars.filter(car => car.make._id === selectedMakeId);
     makeModels = _.uniq(makeModels.map(m => m.models)) // no use
     return makeModels[0];
 }
 
-export function getTrims(make, model) {
-    let makeModels = cars.filter(car => car.make.name === make);
-    makeModels = makeModels[0].models
-    let modelTrims = makeModels.filter(mm => mm.name === model)
-    modelTrims = _.uniq(modelTrims.map(m => m.trim))
-    let options = modelTrims[0]
-    return options
+export function getTrims(selectedMakeId, selectedModelId) {
+    let makeModels = getModels(selectedMakeId)
+    makeModels = makeModels.filter(m => m._id === selectedModelId)
+
 }

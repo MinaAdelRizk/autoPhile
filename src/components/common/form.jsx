@@ -23,17 +23,17 @@ class Form extends Component {
     const obj = { [name]: value };
     const schema = { [name]: this.schema[name] };
     const { error } = Joi.validate(obj, schema);
-    return error ? error.details[0].message : null;
+    if (error) return error.details[0].message
+    if (!error) return null;
   };
 
   handleSubmit = e => {
     e.preventDefault();
-
     const errors = this.validate();
     this.setState({ errors: errors || {} });
     if (errors) return;
-
     this.doSubmit();
+    console.log("Submitted")
   };
 
   handleChange = ({ currentTarget: input }) => {
@@ -50,7 +50,9 @@ class Form extends Component {
 
   renderButton(label) {
     return (
-      <button disabled={this.validate()} className="btn btn-primary">
+      <button className="btn btn-primary" disabled={this.validate()}>
+
+        {/* returns error array (not sure) or null */}
         {label}
       </button>
     );

@@ -2,26 +2,27 @@ import http from './httpService'
 import { apiUrl } from '../config.json'
 import jwtDecode from "jwt-decode";
 
-
 const apiEndPoint = apiUrl + "/auth"
 const tokenKey = "token"
 
 http.setJwt(localStorage.getItem(tokenKey));
 
-export async function login(email, password) {
+async function login(email, password) {
     const { data: jwt } = await http.post(apiEndPoint, { email, password });
     localStorage.setItem(tokenKey, jwt)
+    const { selectedCar } = jwtDecode(jwt)
+    localStorage.setItem("selectedCar", selectedCar.carName)
 }
 
-export function loginWithJwt(jwt) {
+function loginWithJwt(jwt) {
     localStorage.setItem(tokenKey, jwt)
 }
 
-export function logout() {
+function logout() {
     localStorage.removeItem(tokenKey)
 }
 
-export function getCurrentUser() {
+function getCurrentUser() {
     try {
         const jwt = localStorage.getItem(tokenKey)
         return jwtDecode(jwt);
@@ -30,7 +31,7 @@ export function getCurrentUser() {
     }
 }
 
-export function getJwt() {
+function getJwt() {
     localStorage.getItem(tokenKey)
 }
 

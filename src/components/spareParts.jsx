@@ -69,7 +69,7 @@ class SpareParts extends Component {
         const { cat, selectedCat, searchQuery, pageSize, currentPage } = this.state;
 
         return (
-            <div className="row">
+            <div className="page-content">
                 <div className="col-2 sideBar">
                     <VListGroup
                         items={cat}
@@ -78,14 +78,14 @@ class SpareParts extends Component {
                     />
                 </div>
 
-                <div className="col-10 my-1">
+                <div className="col-10">
 
                     <SearchBox
                         value={searchQuery}
                         onChange={this.handleSearch}
                     />
 
-                    <h3>Every car and it's parts, not every part and it's cars</h3>
+                    <h3>Every car and its parts, not every part and its cars</h3>
 
                     <PartsGrid
                         items={data}

@@ -1,16 +1,17 @@
 import axios from "axios"
 import { toast } from 'react-toastify'
-
+import logger from './logService'
 
 axios.interceptors.response.use(null, error => {
 
     const expectedError = (
         error.response &&
-        error.response.statues > 400 &&
-        error.response.statues < 500
+        error.response.status >= 400 &&
+        error.response.status < 500
     );
 
     if (!expectedError) {
+        logger.log(error)
         toast.error("An Unexpected error occured")
     }
 

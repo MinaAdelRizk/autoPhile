@@ -8,17 +8,20 @@ import NotFound from './components/notFound';
 import RegisterForm from './components/registerForm';
 import LoginForm from './components/loginForm';
 import Fluids from './components/fluids';
+import ListFluid from './components/addFluid';
 import Tires from './components/tires';
-
 import auth from './services/authService'
 
+
 import { Switch, Route, Redirect } from 'react-router-dom';
-import { ToastContainer } from 'react-toastify';
 import { useEffect, useState } from 'react';
 import './App.css';
 
-let selectedCar = localStorage.getItem('selectedCar');
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
+
+let selectedCar = localStorage.getItem('selectedCar');
 // let userName = localStorage.getItem("name")
 
 
@@ -33,11 +36,11 @@ function App() {
 
   return (
 
-    < React.Fragment>
+    <React.Fragment>
 
       <ToastContainer />
 
-      <NavBar selectedCar={selectedCar} user={user} />
+      <NavBar selectedCar={selectedCar || "Select A Car"} user={user} />
 
       <main className="container-fluid page-holder">
         <Switch>
@@ -50,6 +53,11 @@ function App() {
           <Route path="/request-service-quotation" component={SpareParts} />
           <Route path="/login" component={LoginForm} />
           <Route path="/register" component={RegisterForm} />
+          <Route path="/addFluid" render={props => {
+            if (!user) return <Redirect to="/login" />
+            if (!user.isSeller) return <Redirect to="/fluids" />
+            return <ListFluid {...props} />
+          }} />
           <Route path="/not-found" component={NotFound} />
           <Redirect exact from="/" to="/home" />
           <Redirect to="/not-found" />
