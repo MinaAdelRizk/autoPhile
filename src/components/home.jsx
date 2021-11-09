@@ -14,23 +14,27 @@ const Home = () => {
                 <div className="row section">
                     <div className="col service-content">
                         <h5 className="sevice-title">Oil Change</h5>
+                        <img src="../tyres.jpeg" alt="" className="service-image" />
                         <div className="service-desc">
-                            Being on top of things constantly required, Oil Change made easier and hassle free,
+                            Being on top of the frequently required consumables, Oil Change became easier and hassle free,
                             no more waiting in queues or worries about the filter
+                            <Link to="/fluids" className="service-link">See more!</Link>
                         </div>
-                        <Link to="/fluids" className="service-link">learn more</Link>
+
                     </div>
 
                     <div className="col service-content">
                         <h5 className="sevice-title">Tyre Replacement</h5>
+                        <img src="../tyres.jpeg" alt="" className="service-image" />
                         <div className="service-desc">
-                            When it comes to your safety, imroved control of the vehicle and tyre ability to grip on the road is very important!
+                            When it comes to your safety, imroved control of the vehicle and tyres ability to grip on the road is at utmost importance!
+                            <Link to="/tyres" className="service-link">See more!</Link>
                         </div>
-                        <Link to="/tires" className="service-link">learn more</Link>
                     </div>
 
                     <div className="col service-content">
                         <h5 className="sevice-title">Quick Services</h5>
+                        <img src="../tyres.jpeg" alt="" className="service-image" />
                         <div className="service-desc">
                             <ul>
                                 <li>Spark Plugs replacement</li>
@@ -39,7 +43,7 @@ const Home = () => {
                                 <li>Super Easy Services</li>
                             </ul>
                         </div>
-                        <Link to="/spare-parts" className="service-link">learn more</Link>
+                        <Link to="/maintenance" className="service-link">See more!</Link>
                     </div>
                 </div>
 

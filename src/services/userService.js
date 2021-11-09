@@ -25,9 +25,8 @@ export function register(user) {
 
 export async function updateUserCar(car) {
     localStorage.setItem("selectedCar", `${car.make} ${car.model} ${car.year}`)
-    window.location = '/'
     let { data: user } = await http.get(apiEndPoint + "/me")
-    const { _id } = user
     if (!user) return
-    await http.put(apiEndPoint + '/' + _id, car)
+    await http.put(apiEndPoint + '/' + user._id, car)
+    window.location = '/'
 }

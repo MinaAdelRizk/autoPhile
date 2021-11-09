@@ -22,7 +22,7 @@ const CarSelectModal = ({ btnName, selectedCar }) => {
 
                 <div className="modalTop">
                     <button onClick={() => setModelIsOpen(false)} className="btn btn-danger btn-sm float-right">X</button>
-                    <h4 className="modalTitle">Select</h4>
+                    <h4 className="modalTitle">Select Car</h4>
                 </div>
 
                 <div className="modalBody">

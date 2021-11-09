@@ -20,8 +20,7 @@ class Fluids extends Component {
 
     async componentDidMount() {
 
-        let { data } = await getFluids()
-        let fluids = data
+        let { data: fluids } = await getFluids()
 
         let mnf = _.uniq(fluids.map(f => f.mnf))
         mnf.unshift("All")
@@ -90,7 +89,7 @@ class Fluids extends Component {
 
                 <div className="col-10 my-1">
 
-                    {user ? user.isSeller && <Link to="/addFluid">Add Fluid</Link> : null}
+                    {user && user.isSeller ? <Link to="/addFluid">Add Fluid</Link> : null}
 
                     <HListGroup
                         items={vsc}

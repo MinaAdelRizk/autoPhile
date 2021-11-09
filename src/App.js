@@ -9,9 +9,9 @@ import RegisterForm from './components/registerForm';
 import LoginForm from './components/loginForm';
 import Fluids from './components/fluids';
 import ListFluid from './components/addFluid';
-import Tires from './components/tires';
+import AddTyre from './components/addTyre'
+import Tyres from './components/tyres';
 import auth from './services/authService'
-
 
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { useEffect, useState } from 'react';
@@ -47,7 +47,7 @@ function App() {
           <Route path="/home" component={Home} />
           <Route path="/spare-parts" component={SpareParts} />
           <Route path="/maintenance" component={Maintenance} />
-          <Route path="/tires" component={Tires} />
+          <Route path="/tyres" component={Tyres} />
           <Route path="/batteries" component={SpareParts} />
           <Route path="/fluids" component={Fluids} />
           <Route path="/request-service-quotation" component={SpareParts} />
@@ -57,6 +57,11 @@ function App() {
             if (!user) return <Redirect to="/login" />
             if (!user.isSeller) return <Redirect to="/fluids" />
             return <ListFluid {...props} />
+          }} />
+          <Route path="/addTyre" render={props => {
+            if (!user) return <Redirect to="/login" />
+            if (!user.isSeller) return <Redirect to="/fluids" />
+            return <AddTyre {...props} />
           }} />
           <Route path="/not-found" component={NotFound} />
           <Redirect exact from="/" to="/home" />

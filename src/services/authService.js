@@ -22,7 +22,7 @@ function logout() {
     localStorage.removeItem(tokenKey)
 }
 
-function getCurrentUser() {
+export function getCurrentUser() {
     try {
         const jwt = localStorage.getItem(tokenKey)
         return jwtDecode(jwt);

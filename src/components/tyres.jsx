@@ -1,33 +1,46 @@
 import React, { Component } from 'react';
 import VListGroup from './common/vListGroup';
 import HListGroup from './common/hListGroup';
-import { getTires, getTiresMnf, getTireW, getTireH, getRimSize } from '../services/fakeTiresService';
+import { getTyres, deleteTyre, addTyre } from '../services/tyresService';
+import auth from '../services/authService'
 import PartsGrid from './partsGrid';
+import _ from 'underscore'
+import { toast } from 'react-toastify';
+import { Link } from 'react-router-dom';
 
-class Tires extends Component {
+class Tyres extends Component {
     state = {
-        tires: [],
+        user: {},
+        tyres: [],
         manufacturers: [],
-        selectedMnf: "All",
         width: [],
-        selectedWidth: "All",
         height: [],
-        selectedHeight: "All",
         rim: [],
-        selectedRim: "All"
+
+        selectedWidth: "All",
+        selectedHeight: "All",
+        selectedRim: "All",
+        selectedMnf: "All"
     }
 
-    componentDidMount() {
-        const tires = getTires();
-        const manufacturers = getTiresMnf()
+    async componentDidMount() {
+        const { data: tyres } = await getTyres();
+
+        const { man } = tyres
+        console.log(man)
+
+        const manufacturers = _.unique(tyres.map(t => t.manufacturer.name))
         manufacturers.unshift("All")
-        const width = getTireW()
+        const width = _.uniq(tyres.map(d => d.width))
         width.push("All")
-        const rim = getRimSize()
-        rim.push("All")
-        const height = getTireH()
+        const height = _.unique(tyres.map(d => d.height))
         height.push("All")
-        this.setState({ tires, manufacturers, width, rim, height })
+        const rim = _.uniq(tyres.map(d => d.rim))
+        rim.push("All")
+
+        let user = auth.getCurrentUser()
+
+        this.setState({ user, tyres, manufacturers, width, height, rim })
     }
 
     // prestashop
@@ -51,44 +64,51 @@ class Tires extends Component {
         this.setState({ selectedHeight })
     }
 
-    handleLike = item => {
-        const tires = [...this.state.tires]
-        const index = tires.indexOf(item)
-        tires[index] = { ...tires[index] }
-        tires[index].liked = !tires[index].liked
-        this.setState({ tires })
+    // handleLike = item => {
+    //     const tyres = [...this.state.tyres]
+    //     const index = tyres.indexOf(item)
+    //     tyres[index] = { ...tyres[index] }
+    //     tyres[index].liked = !tyres[index].liked
+    //     this.setState({ tires: tyres })
+    // }
+
+    handleDelete = (item) => {
+        deleteTyre(item)
+        toast.success("Tyre Deleted Successfully");
+        function redirect() { window.location = "/tyres" }
+        setTimeout(redirect, 1000);
     }
 
     getPageData = () => {
-        const { tires: allTires, selectedMnf, selectedWidth, selectedHeight, selectedRim } = this.state;
-        let data = allTires;
+        const { tyres: allTyres, selectedMnf, selectedWidth, selectedHeight, selectedRim } = this.state;
+        let data = allTyres;
 
-        data = selectedMnf && (selectedMnf !== "All") ? data.filter(t => t.mnf === selectedMnf) : allTires;
+        data = selectedMnf && (selectedMnf !== "All") ? data.filter(t => t.manufacturer.name === selectedMnf) : allTyres;
 
         data = selectedWidth && (selectedWidth !== "All") ? data.filter(t => t.width === selectedWidth) : data
 
         data = selectedHeight && (selectedHeight !== "All") ? data.filter(t => t.height === selectedHeight) : data
 
         data = selectedRim && (selectedRim !== "All") ? data.filter(t => t.rim === selectedRim) : data;
-        return { tires: data }
+        return { tyres: data }
     }
 
 
 
     render() {
 
-        const { tires, } = this.getPageData();
+        const { tyres } = this.getPageData();
 
-        const { manufacturers, selectedMnf, width, selectedWidth, rim, selectedRim, height, selectedHeight } = this.state;
+        const { user, manufacturers, selectedMnf, width, selectedWidth, rim, selectedRim, height, selectedHeight } = this.state;
 
         const divider = <hr className="my-0" style={{ background: "#ffc107" }} />;
 
         return (
-            <div className="page-content">
+            <div className="page-content tyres-page">
 
                 <div className="col-2">
                     <VListGroup
-                        // title="Manufacturer: "
+                        title="Manufacturer: "
                         items={manufacturers}
                         selectedItem={selectedMnf}
                         onItemSelect={this.handleManufacturerSelect}
@@ -124,9 +144,12 @@ class Tires extends Component {
                     />
                     {divider}
 
+                    {user && user.isSeller ? <Link to="/addTyre">Add Tyre</Link> : null}
                     <PartsGrid
-                        items={tires}
+                        items={tyres}
+                        onDelete={this.handleDelete}
                         onLike={this.handleLike}
+                        user={user}
                     />
                 </div>
 
@@ -135,4 +158,4 @@ class Tires extends Component {
     }
 }
 
-export default Tires;
+export default Tyres;

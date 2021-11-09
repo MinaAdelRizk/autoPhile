@@ -12,6 +12,7 @@ class Form extends Component {
   validate = () => {
     const options = { abortEarly: false };
     const { error } = Joi.validate(this.state.data, this.schema, options);
+    console.log(error);
     if (!error) return null;
 
     const errors = {};
@@ -29,7 +30,8 @@ class Form extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    const errors = this.validate();
+    const errors = null
+    // this.validate();
     this.setState({ errors: errors || {} });
     if (errors) return;
     this.doSubmit();
@@ -50,11 +52,11 @@ class Form extends Component {
 
   renderButton(label) {
     return (
-      <button className="btn btn-primary" disabled={this.validate()}>
+      <button className="btn btn-primary" >
 
         {/* returns error array (not sure) or null */}
         {label}
-      </button>
+      </button >
     );
   }
 

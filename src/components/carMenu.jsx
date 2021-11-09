@@ -4,9 +4,11 @@ import { addModel, getMakes, getModels } from '../services/carMakeService';
 import Select from './common/select';
 import YearPicker from './common/yearPicker';
 import { updateUserCar } from '../services/userService'
+import { getCurrentUser } from '../services/authService'
 
 function CarMenu() {
 
+    let [user, setUser] = useState()
     let [makes, setMakes] = useState([])
     let [selectedMake, setSelectedMake] = useState([])
 
@@ -16,8 +18,10 @@ function CarMenu() {
     let [selectedYear, setSelectedYear] = useState([])
 
     useEffect(async () => {
-        let { data } = await getMakes()
-        setMakes(data)
+        let { data: makes } = await getMakes()
+        setMakes(makes)
+        let user = getCurrentUser()
+        setUser(user)
     }, []);
 
     async function handleMakeChange({ currentTarget: input }) {
@@ -41,7 +45,7 @@ function CarMenu() {
         const make = makes.filter(m => m._id === selectedMake)[0].name
         const model = models.filter(m => m._id === selectedModel)[0].name
         const car = concat({ make, selectedMake, model, selectedModel, year: selectedYear })[0]
-        await updateUserCar(car)
+        user && updateUserCar(car)
     }
 
     return (

@@ -6,10 +6,6 @@ import { paginate } from '../utils/paginate'
 import Pagination from './common/pagination'
 import VListGroup from './common/vListGroup';
 
-import { getParts, getPartsCat } from './../services/fakePartsService';
-
-// import CarSelectMenu from './carSelectMenu'
-
 
 class SpareParts extends Component {
     state = {
@@ -22,9 +18,9 @@ class SpareParts extends Component {
         selectedCar: "" // undefined but defined in carSelectMenu
     };
     componentDidMount() {
-        const parts = getParts();
-        const cat = ["All", ...getPartsCat()]
-        this.setState({ cat, parts })
+        // const parts = getParts();
+        // const cat = ["All", ...getPartsCat()]
+        // this.setState({ cat, parts })
     };
 
     handleSearch = query => {

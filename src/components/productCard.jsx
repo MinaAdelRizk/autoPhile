@@ -1,16 +1,18 @@
 import React, { Component } from 'react';
 import Like from './common/like';
 import Delete from './common/delete'
+
 class ProductCard extends Component {
 
     render() {
         const { onLike, onDelete, item: i, user } = this.props;
+        const uploads = "http://localhost:3000/api/"
 
         return (
             <React.Fragment>
                 <div className="card">
                     <div className="productImageBox">
-                        <img src="..." alt="" />
+                        <img src={uploads + `${i.productImage}`} alt="" />
                     </div>
                     <div className="card-body">
                         <h5 className="card-title">
@@ -25,6 +27,7 @@ class ProductCard extends Component {
                             {i.type && <li>Type: {i.type}</li>}
                             {i.volume && <li>Volume: {i.volume}</li>}
                             {/* tires related */}
+                            {i.manufacturer && <li>Manufacturer: {i.manufacturer.name} </li>}
                             {i.width && <li>W: P{i.width} mm H: {i.height}</li>}
                             {i.rim && <li>Rim Diamiter: R{i.rim}</li>}
                             {i.y && <li>Year: {i.y}</li>}
@@ -38,7 +41,7 @@ class ProductCard extends Component {
                             </button>
 
                             {<span>Price: {i.price}</span>}
-                            {user && user.isAdmin ? < Delete onClick={() => onDelete(i)} /> : null}
+                            {user && user.isAdmin ? <Delete onClick={() => onDelete(i)} /> : null}
                             <Like liked={i.liked} onClick={() => onLike(i)} />
                         </div>
                     </div>

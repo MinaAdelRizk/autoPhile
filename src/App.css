@@ -9,12 +9,14 @@
 /* page-content includes the side bar and the right side items grid */
 .page-content {
   display: inline-flex;
+  width: 100%;
+  background-color: antiquewhite !important;
 }
 .page-holder {
   /* background-image: url("./road.jpg") ; */
   
   padding: 0px !important;
-  margin-top: 1rem;
+  padding-top: 1rem;
 }
 
 .home-page{
@@ -26,7 +28,10 @@
   color: antiquewhite;
   margin-top: -1rem;
 }
-
+/* 
+.tyres-page {
+  background-color: antiquewhite !important;
+} */
 .home-shade{
   background-color: #222629e6;
   padding: 1rem;
@@ -38,7 +43,9 @@
   color: white ;
   margin: 0 1rem;
 }
-
+.form-control {
+   background-color: antiquewhite !important;
+}
 .home-list {
   list-style-type: circle;
 }
@@ -56,13 +63,19 @@
 
 .service-content {
   background: #0077ff1a;
-  max-width: 30% !important;
+  max-width: 32% !important;
+  height: 500px;
   border-radius: 5px;
   margin: auto;
 }
 .sevice-title{
   text-align: center;
   padding-top: 1rem;
+}
+
+.service-image {
+  width:100%;
+  height: 250px;
 }
 .service-desc {
   padding: 1rem 0rem;
@@ -73,7 +86,6 @@
 .service-link {
   text-decoration: none;
   color:#ffc107;
-  float: right;
   padding: .35rem !important;
 } .service-link:hover {
   text-decoration: none;
@@ -89,7 +101,7 @@
   display: flex !important;
   align-items: center;
   border-radius: 5px;
-  
+  background-color: antiquewhite !important;
 }  
 .vertical-list { border: none !important;}
 .like {
@@ -103,13 +115,19 @@
 }
 .productImageBox {
   min-width: 200px;
-  min-height: 160px;
+  height: 160px;
   background-color: lightcoral;
+  overflow: hidden;
+}
+.productImageBox img {
+  height: auto;
+  width: 100%;
 }
 
 .card {
   min-height: 400px;
   overflow: hidden;
+  background-color: cornsilk !important;
 }
 
 .card-body {
@@ -129,14 +147,15 @@
 
 /* card-footer */
 .card-footer {
-  display: content;
-  padding: 10px 0 0 0 !important;
-  border-top: 1px solid rgba(0, 0, 0, 0.12);
-  background-color: white !important;
-  border-top: 1px solid rgba(0, 0, 0, 0.125);
+  background-color: antiquewhite;
   position: absolute;
+  left:0px;
   bottom: 10px;
-  width: 93%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  align-content: space-evenly;
+  justify-content: space-around;
 }
 
 .list-group {

@@ -22,7 +22,7 @@ const NavBar = ({ selectedCar, user }) => {
                     {/* clicking the link will replace the current entry in the history stack instead of adding a new one. */}
                     <Nav.Link href="/maintenance">Maintainance</Nav.Link>
                     <NavDropdown title="Quick Services / Replacements" id="collasible-nav-dropdown">
-                        <NavDropdown.Item href="/tires">Tyres</NavDropdown.Item>
+                        <NavDropdown.Item href="/tyres">Tyres</NavDropdown.Item>
                         <NavDropdown.Item href="/batteries">Batteries</NavDropdown.Item>
                         <NavDropdown.Item href="/fluids">Fluids</NavDropdown.Item>
                         <NavDropdown.Divider />

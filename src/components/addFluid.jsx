@@ -3,8 +3,9 @@ import Joi from "joi-browser";
 import Form from "./common/form";
 import { addFluid } from '../services/fluidsService'
 import auth from '../services/authService'
-import { getCategories } from '../services/categoryService'
+import { getCategories } from '../services/categoriesService'
 import { toast } from 'react-toastify';
+import http from "../services/httpService";
 
 class ListFluid extends Form {
     state = {
@@ -12,7 +13,8 @@ class ListFluid extends Form {
             title: "", category: "",
             type: "", vsc: "",
             mnf: "", price: "",
-            volume: "", numberInStock: "", seller: ""
+            volume: "", numberInStock: "", seller: "",
+            productImage: ""
         },
         categories: [],
         errors: {}
@@ -38,16 +40,17 @@ class ListFluid extends Form {
         price: Joi.string().required(),
         volume: Joi.string().required().label("Volume"),
         numberInStock: Joi.number().required(),
-        seller: Joi.string().required()
+        seller: Joi.string().required(),
+        productImage: Joi.string().required()
     }
 
     doSubmit = async () => {
         try {
             const value = { ...this.state.data }
             await addFluid(value)
-            toast.success("Posting fluid, you will be redirected once done..");
-            function redirect() { window.location = "/fluids" }
-            setTimeout(redirect, 3000);
+            // toast.success("Posting fluid, you will be redirected once done..");
+            // function redirect() { window.location = "/fluids" }
+            // setTimeout(redirect, 3000);
         }
         catch (ex) {
             if (ex.response && ex.response.status === 400) {
@@ -58,6 +61,23 @@ class ListFluid extends Form {
         }
     };
 
+    handleFileUpload = (e) => {
+        let file = e.target.files[0]
+        let reader = new FileReader();
+        reader.readAsDataURL(file)
+
+        reader.onload = (e) => {
+            // const url = "http://localhost:3000/api/fluids/"
+            const productImage = { file: e.target.result }
+            console.log(productImage)
+            const data = { ...this.state.data }
+            data.productImage = productImage
+            console.log(data)
+            this.setState({ data })
+            // console.log(this.state.data);
+        }
+        // this.validate();
+    }
     render() {
         return (
             <div className="m-5">
@@ -71,8 +91,13 @@ class ListFluid extends Form {
                     {this.renderInput("price", "Price")}
                     {this.renderInput("volume", "Volume")}
                     {this.renderInput("numberInStock", "Number In Stock")}
+                    {/* {this.renderInput("productImage", "Image", "file")} */}
+
                     {/* {this.renderInput("seller", "Seller")} */}
+                    <input type="file" name="productImage" onChange={this.handleFileUpload} />
                     {this.renderButton("Submit")}
+
+
                 </form>
             </div>
         );
