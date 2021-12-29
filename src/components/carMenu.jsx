@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import _, { concat } from "lodash"
-import { addModel, getMakes, getModels } from '../services/carMakeService';
+import _ from "lodash"
+import { getMakes, getModels } from '../services/carMakeService';
 import Select from './common/select';
 import YearPicker from './common/yearPicker';
 import { updateUserCar } from '../services/userService'
@@ -44,7 +44,7 @@ function CarMenu() {
     async function populateCar() {
         const make = makes.filter(m => m._id === selectedMake)[0].name
         const model = models.filter(m => m._id === selectedModel)[0].name
-        const car = concat({ make, selectedMake, model, selectedModel, year: selectedYear })[0]
+        const car = _.concat({ make, selectedMake, model, selectedModel, year: selectedYear })[0]
         user && updateUserCar(car)
     }
 
@@ -57,7 +57,7 @@ function CarMenu() {
                 onChange={handleMakeChange}
             />
 
-            {selectedMake != "" &&
+            {selectedMake !== "" &&
                 <Select
                     name="model"
                     label="Select Model"
@@ -65,13 +65,13 @@ function CarMenu() {
                     onChange={handleModelChange}
                 />}
 
-            {selectedModel != "" &&
+            {selectedModel !== "" &&
                 <YearPicker
                     label="Select Year"
                     onChange={handleYearChange}
                 />}
 
-            {selectedYear != "" && <button
+            {selectedYear !== "" && <button
                 onClick={() => populateCar(selectedMake, selectedModel, selectedYear)}
                 className="btn btn-primary m-3">Save</button>}
         </div>

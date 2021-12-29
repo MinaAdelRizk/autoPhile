@@ -1,7 +1,7 @@
 import React from "react";
 
 let classes = "list-group-item clickable"
-let activeClasses = classes + " text-warning"
+let activeClasses = classes + " text-warning font-weight-bold"
 
 
 const VListGroup = ({
@@ -12,7 +12,8 @@ const VListGroup = ({
 }) => {
     return (
 
-        <div>
+        <div className="vertical-list">
+            <h5>Filter By:</h5>
             {title ? <h6>{title}</h6> : null}
             <ul className="list-group-flush p-0" style={{
                 width: "100%"
@@ -21,7 +22,7 @@ const VListGroup = ({
                     <li onClick={() => onItemSelect(item)}
                         key={item}
                         className={selectedItem === item ? activeClasses : classes}>
-                        {item}
+                        {item.name}
                     </li>
                 ))
                 }

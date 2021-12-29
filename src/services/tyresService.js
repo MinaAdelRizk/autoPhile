@@ -1,5 +1,4 @@
 import http from './httpService';
-import _ from 'underscore'
 
 const apiEndPoint = 'http://localhost:3000/api/tyres'
 

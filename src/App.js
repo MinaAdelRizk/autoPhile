@@ -8,17 +8,17 @@ import NotFound from './components/notFound';
 import RegisterForm from './components/registerForm';
 import LoginForm from './components/loginForm';
 import Fluids from './components/fluids';
-import ListFluid from './components/addFluid';
+import AddFluid from './components/addFluid';
 import AddTyre from './components/addTyre'
 import Tyres from './components/tyres';
 import auth from './services/authService'
 
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import './App.css';
 
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import './App.css';
 
 
 let selectedCar = localStorage.getItem('selectedCar');
@@ -53,18 +53,21 @@ function App() {
           <Route path="/request-service-quotation" component={SpareParts} />
           <Route path="/login" component={LoginForm} />
           <Route path="/register" component={RegisterForm} />
+
           <Route path="/addFluid" render={props => {
             if (!user) return <Redirect to="/login" />
             if (!user.isSeller) return <Redirect to="/fluids" />
-            return <ListFluid {...props} />
+            return <AddFluid {...props} />
           }} />
+
           <Route path="/addTyre" render={props => {
             if (!user) return <Redirect to="/login" />
             if (!user.isSeller) return <Redirect to="/fluids" />
             return <AddTyre {...props} />
           }} />
-          <Route path="/not-found" component={NotFound} />
+
           <Redirect exact from="/" to="/home" />
+          <Route path="/not-found" component={NotFound} />
           <Redirect to="/not-found" />
         </Switch>
       </main>

@@ -10,11 +10,9 @@
 .page-content {
   display: inline-flex;
   width: 100%;
-  background-color: antiquewhite !important;
 }
 .page-holder {
   /* background-image: url("./road.jpg") ; */
-  
   padding: 0px !important;
   padding-top: 1rem;
 }
@@ -43,9 +41,9 @@
   color: white ;
   margin: 0 1rem;
 }
-.form-control {
+/* .form-control {
    background-color: antiquewhite !important;
-}
+} */
 .home-list {
   list-style-type: circle;
 }
@@ -92,18 +90,18 @@
   color: yellow;
 }
 .list-group-item {
-  padding: 0.5rem 0.25rem !important;
+  padding: 0.25rem 0.50rem !important;
   margin: .25rem;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.125) !important;
+  border:none !important;
+  /* border-bottom: 1px solid rgba(0, 0, 0, 0.125) !important; */
   font-size: 1rem;
-  font-weight: bold;
-  font-family: inherit;
-  display: flex !important;
-  align-items: center;
-  border-radius: 5px;
-  background-color: antiquewhite !important;
 }  
-.vertical-list { border: none !important;}
+.vertical-list { display: block;}
+.vertical-list h5 {
+  text-decoration: underline;
+  text-underline-position: from-font;
+  padding: 1rem 0rem;
+}
 .like {
   float: right;
   margin: 2% 0%;
@@ -114,40 +112,49 @@
   margin: 20px auto;
 }
 .productImageBox {
-  min-width: 200px;
+  display: flex;
+  justify-content: center;
   height: 160px;
-  background-color: lightcoral;
-  overflow: hidden;
+  border-bottom:1px solid rgba(0, 0, 0, 0.125);;
 }
 .productImageBox img {
   height: auto;
-  width: 100%;
+  margin: 14px 25%;
+    width: 39%;
+    
 }
 
 .card {
-  min-height: 400px;
+  min-height: 360px;
   overflow: hidden;
-  background-color: cornsilk !important;
+  border: none !important;
 }
 
-.card-body {
+/* .card-body {
   padding: 0.5rem !important;
-}
+} */
 
 .card-title {
-  margin-bottom: 0.75rem;
-  font-family: monospace;
   font-weight: bold;
+  max-height: 30px;
 }
 .card-text {
   padding: 0px;
   font-size: 0.85rem;
-  font-family: monospace;
+  overflow: hidden;
 }
-
+ .card-body span {
+  float: right;
+  font-weight: 400;
+  font-style: italic;
+  color: blue;
+  font-family: system-ui;
+  position: absolute;
+  bottom: 2rem;
+  right: 1rem;
+ }
 /* card-footer */
 .card-footer {
-  background-color: antiquewhite;
   position: absolute;
   left:0px;
   bottom: 10px;
@@ -156,6 +163,7 @@
   align-items: center;
   align-content: space-evenly;
   justify-content: space-around;
+  background-color:  rgb(223 178 178 / 6%) !important ;
 }
 
 .list-group {

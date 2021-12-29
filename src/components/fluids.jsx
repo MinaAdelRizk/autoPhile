@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { deleteFluid, getFluids, getMnf } from '../services/fluidsService';
+import { deleteFluid, getFluids } from '../services/fluidsService';
 import auth from '../services/authService'
 import PartsGrid from './partsGrid';
 import HListGroup from "./common/hListGroup"
@@ -12,9 +12,9 @@ class Fluids extends Component {
     state = {
         fluids: [],
         mnf: [],
-        selectedMnf: "All",
+        selectedMnf: null,
         vsc: [],
-        selectedVsc: "All",
+        selectedVsc: null,
         user: {}
     }
 
@@ -23,7 +23,7 @@ class Fluids extends Component {
         let { data: fluids } = await getFluids()
 
         let mnf = _.uniq(fluids.map(f => f.mnf))
-        mnf.unshift("All")
+        mnf.unshift({ name: "All", _id: "" })
 
         let vsc = _.uniq(fluids.map(f => f.vsc))
         vsc.unshift("All")
@@ -63,7 +63,7 @@ class Fluids extends Component {
 
         let data = allFluids;
 
-        data = selectedMnf && (selectedMnf !== "All") ? data.filter(f => f.mnf === selectedMnf) : data;
+        data = selectedMnf && (selectedMnf._id !== "") ? data.filter(f => f.mnf === selectedMnf) : data;
 
         data = selectedVsc && (selectedVsc !== "All") ? data.filter(f => f.vsc === selectedVsc) : data;
 
@@ -81,6 +81,7 @@ class Fluids extends Component {
 
                 <div className="col-2">
                     <VListGroup
+                        title="Manufacturer"
                         items={mnf}
                         selectedItem={selectedMnf}
                         onItemSelect={this.handleManufacturerSelect}
@@ -89,7 +90,8 @@ class Fluids extends Component {
 
                 <div className="col-10 my-1">
 
-                    {user && user.isSeller ? <Link to="/addFluid">Add Fluid</Link> : null}
+                    {user && user.isSeller ?
+                        <Link to="/addFluid"><button className="btn btn-success">Add Fluid</button></Link> : null}
 
                     <HListGroup
                         items={vsc}

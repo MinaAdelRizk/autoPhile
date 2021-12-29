@@ -1,7 +1,7 @@
 import React from "react";
 
 let classes = "list-group-item clickable vertical-list"
-let activeClasses = classes + " text-warning"
+let activeClasses = classes + " text-warning font-weight-bold"
 
 
 const HListGroup = ({

@@ -1,7 +1,5 @@
 import http from './httpService'
 import { apiUrl } from '../config.json'
-import _, { concat } from "lodash"
-import { jwtDecode } from 'jwt-decode';
 
 const apiEndPoint = apiUrl + "/users"
 
@@ -13,15 +11,6 @@ export function register(user) {
     })
 }
 
-
-// export function updateCar(user, selectedCar) {
-//     if (user._id) {
-//         const body = { ...user }
-//         delete body._id
-//         const updated = { ...body, "selectedCar": selectedCar }
-//         return http.put(apiEndPoint + "/" + user._id, updated)
-//     }
-// }
 
 export async function updateUserCar(car) {
     localStorage.setItem("selectedCar", `${car.make} ${car.model} ${car.year}`)
