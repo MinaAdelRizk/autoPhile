@@ -7,6 +7,7 @@ import Maintenance from './components/maintenance';
 import NotFound from './components/notFound';
 import RegisterForm from './components/registerForm';
 import LoginForm from './components/loginForm';
+import Profile from './components/profile';
 import Fluids from './components/fluids';
 import AddFluid from './components/addFluid';
 import AddTyre from './components/addTyre'
@@ -53,6 +54,7 @@ function App() {
           <Route path="/request-service-quotation" component={SpareParts} />
           <Route path="/login" component={LoginForm} />
           <Route path="/register" component={RegisterForm} />
+          <Route path="/profile" component={Profile} />
 
           <Route path="/addFluid" render={props => {
             if (!user) return <Redirect to="/login" />

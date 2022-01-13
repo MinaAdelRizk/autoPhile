@@ -20,7 +20,7 @@ const VListGroup = ({
             }}>
                 {items.map(item => (
                     <li onClick={() => onItemSelect(item)}
-                        key={item}
+                        key={item._id}
                         className={selectedItem === item ? activeClasses : classes}>
                         {item.name}
                     </li>

@@ -20,17 +20,18 @@ class Tyres extends Component {
         selectedWidth: "All",
         selectedHeight: "All",
         selectedRim: "All",
-        selectedMnf: "All"
+        selectedMnf: { name: "All", _id: "" }
     }
 
     async componentDidMount() {
         const { data: tyres } = await getTyres();
+        let manufacturers = tyres.map(t => t.manufacturer)
+        manufacturers = _.uniq(manufacturers, _.iteratee('_id'))
+        console.log(manufacturers)
 
-        const { man } = tyres
-        console.log(man)
+        manufacturers.unshift({ name: "All", _id: "" })
 
-        const manufacturers = _.unique(tyres.map(t => t.manufacturer.name))
-        manufacturers.unshift("All")
+
         const width = _.uniq(tyres.map(d => d.width))
         width.push("All")
         const height = _.unique(tyres.map(d => d.height))
@@ -46,6 +47,7 @@ class Tyres extends Component {
     // prestashop
     handleManufacturerSelect = selected => {
         const selectedMnf = selected;
+        console.log(selectedMnf)
         this.setState({ selectedMnf })
     }
 
@@ -83,7 +85,7 @@ class Tyres extends Component {
         const { tyres: allTyres, selectedMnf, selectedWidth, selectedHeight, selectedRim } = this.state;
         let data = allTyres;
 
-        data = selectedMnf && (selectedMnf !== "All") ? data.filter(t => t.manufacturer.name === selectedMnf) : allTyres;
+        data = selectedMnf && (selectedMnf.name !== "All") ? data.filter(t => t.manufacturer._id === selectedMnf._id) : allTyres;
 
         data = selectedWidth && (selectedWidth !== "All") ? data.filter(t => t.width === selectedWidth) : data
 

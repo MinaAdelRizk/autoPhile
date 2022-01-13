@@ -1,7 +1,8 @@
-import http from './httpService';
 import _ from 'underscore'
+import http from './httpService';
+import { apiUrl } from '../config.json'
 
-const apiEndPoint = 'http://localhost:3000/api/fluids'
+const apiEndPoint = apiUrl + "/fluids"
 
 export function getFluids() {
     return http.get(apiEndPoint)

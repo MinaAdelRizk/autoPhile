@@ -6,9 +6,8 @@ import auth from '../services/authService'
 import { getCategories } from '../services/categoriesService'
 import { getManufacturers } from "../services/manufacturersServices";
 import { toast } from 'react-toastify';
-import http from "../services/httpService";
 import axios from "axios";
-import { all, object } from "underscore";
+
 
 class AddFluid extends Form {
     state = {
@@ -17,7 +16,7 @@ class AddFluid extends Form {
             type: "", vsc: "",
             mnf: "", price: "",
             volume: "", numberInStock: "", seller: "",
-            productImage: null,
+            productImage: "",
         },
         categories: [],
         manufacturers: [],
@@ -34,7 +33,7 @@ class AddFluid extends Form {
     }
 
     async componentDidUpdate(prevProps, prevState) {
-        const { data, manufacturers } = this.state
+        const { data } = this.state
         if (prevState.data.category !== data.category) {
             const manufacturers = await getManufacturers(data.category)
             this.setState({ manufacturers })
@@ -50,14 +49,19 @@ class AddFluid extends Form {
         volume: Joi.string().required().label("Volume"),
         numberInStock: Joi.number().required(),
         seller: Joi.string().required(),
-        productImage: Joi.object().required()
+        productImage: Joi.string().required()
+    }
+
+    fileSelectedHandler = e => {
+        const { data } = this.state
+        data.productImage = e.target.files[0]
+        this.setState({ data })
     }
 
     doSubmit = async () => {
 
         try {
-            const data = { ...this.state.data }
-
+            const { data } = this.state
             let formData = new FormData();
 
             formData.append("productImage", data.productImage);
@@ -75,12 +79,13 @@ class AddFluid extends Form {
                 headers: { 'content-type': 'multipart/form-data' }
             }
 
+            console.log(formData)
             axios.post('http://localhost:3000/api/fluids', formData, config)
-            // await addFluid(data)
+            await addFluid(data)
 
             toast.success("Posting fluid, you will be redirected once done..");
             function redirect() { window.location = "/fluids" }
-            setTimeout(redirect, 3000);
+            setTimeout(redirect, 2000);
         }
         catch (ex) {
             if (ex.response && ex.response.status === 400) {
@@ -90,18 +95,6 @@ class AddFluid extends Form {
             }
         }
     };
-
-    fileSelectedHandler = e => {
-
-        console.log(e.target.files[0])
-        let { data } = this.state
-        data.productImage = e.target.files[0]
-        // console.log(data)
-        // const fd = new FormData()
-        // fd.append('productImage', data.productImage, data.productImage.name)
-        this.setState({ data })
-    }
-
 
 
     render() {
@@ -118,14 +111,13 @@ class AddFluid extends Form {
                     {this.renderInput("price", "Price")}
                     {this.renderInput("volume", "Volume")}
                     {this.renderInput("numberInStock", "Number In Stock")}
-                    {/* {this.renderInput("productImage", "Image", "file")} */}
+                    {/* {this.renderInput("productImage", "Image", "file", this.fileSelectedHandler())} */}
 
                     <input
                         type="file"
                         name="productImage"
                         onChange={this.fileSelectedHandler}
                     />
-                    {/* <button onClick={(e) => this.handleFileUpload}>UPLOAD</button> */}
 
                     {this.renderButton("Submit")}
                 </form>

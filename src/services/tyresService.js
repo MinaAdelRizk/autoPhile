@@ -1,6 +1,7 @@
 import http from './httpService';
+import { apiUrl } from '../config.json'
 
-const apiEndPoint = 'http://localhost:3000/api/tyres'
+const apiEndPoint = apiUrl + '/tyres'
 
 export function getTyres() {
     return http.get(apiEndPoint)

@@ -4,7 +4,7 @@ import auth from '../services/authService'
 import PartsGrid from './partsGrid';
 import HListGroup from "./common/hListGroup"
 import VListGroup from './common/vListGroup';
-import _ from 'underscore'
+import _, { iteratee } from 'underscore'
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
@@ -22,9 +22,8 @@ class Fluids extends Component {
 
         let { data: fluids } = await getFluids()
 
-        let mnf = _.uniq(fluids.map(f => f.mnf))
+        let mnf = _.uniq(fluids.map(f => f.mnf), iteratee('_id'))
         mnf.unshift({ name: "All", _id: "" })
-
         let vsc = _.uniq(fluids.map(f => f.vsc))
         vsc.unshift("All")
 
