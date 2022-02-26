@@ -1,7 +1,11 @@
 import http from './httpService';
-import { apiUrl } from '../config.json'
+// import * as apiUrl from '../config.json'
 
-const apiEndPoint = apiUrl + '/tyres'
+const apiEndPoint = 'http://localhost:3000/api/tyres'
+
+const config = {
+    headers: { 'content-type': 'multipart/form-data' }
+}
 
 export function getTyres() {
     return http.get(apiEndPoint)
@@ -14,7 +18,8 @@ export function getTyres() {
 
 export async function addTyre(tyre) {
     try {
-        await http.post(apiEndPoint, tyre)
+        console.log(tyre)
+        await http.post(apiEndPoint, tyre, config)
     } catch (ex) {
         console.log(ex)
     }

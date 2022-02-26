@@ -2,6 +2,8 @@ import axios from "axios"
 import { toast } from 'react-toastify'
 import logger from './logService'
 
+// axios.defaults.baseURL = process.env.REACT_APP_API_URL;
+
 axios.interceptors.response.use(null, error => {
 
     const expectedError = (
@@ -22,10 +24,12 @@ export function setJwt(jwt) {
     axios.defaults.headers.common["x-auth-token"] = jwt;
 }
 
-export default {
+const exportedObject = {
     post: axios.post,
     get: axios.get,
     delete: axios.delete,
     put: axios.put,
     setJwt
-}
+};
+
+export default exportedObject;

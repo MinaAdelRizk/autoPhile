@@ -1,8 +1,7 @@
 import http from './httpService'
-import { apiUrl } from '../config.json'
 import jwtDecode from "jwt-decode";
 
-const apiEndPoint = apiUrl + "/auth"
+const apiEndPoint = "http://localhost:3000/api/auth"
 const tokenKey = "token"
 
 http.setJwt(localStorage.getItem(tokenKey));
@@ -35,11 +34,12 @@ function getJwt() {
     localStorage.getItem(tokenKey)
 }
 
-export default {
+const exportedObject = {
     login,
     loginWithJwt,
     logout,
     getCurrentUser,
     getJwt
-
 };
+
+export default exportedObject;

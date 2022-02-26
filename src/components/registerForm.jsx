@@ -15,13 +15,16 @@ class RegisterForm extends Form {
       .required()
       .email()
       .label("Username"),
+    name: Joi.string()
+      .required()
+      .label("Name"),
+    mobile: Joi.number()
+      .required()
+      .label("Mobile"),
     password: Joi.string()
       .required()
       .min(5)
       .label("Password"),
-    name: Joi.string()
-      .required()
-      .label("Name")
   };
 
   doSubmit = async () => {
@@ -46,7 +49,7 @@ class RegisterForm extends Form {
         <form onSubmit={this.handleSubmit}>
           {this.renderInput("username", "Email Address")}
           {this.renderInput("name", "Name")}
-          {this.renderInput("surname", "Surname")}
+          {this.renderInput("mobile", "Mobile")}
           {this.renderInput("password", "Password", "password")}
           {this.renderButton("Register")}
         </form>

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Joi from "joi-browser";
 import Input from "./input";
 import Select from "./select";
+import CheckBox from "./checkBox"
 
 class Form extends Component {
   state = {
@@ -45,9 +46,23 @@ class Form extends Component {
 
     const data = { ...this.state.data };
     data[input.name] = input.value;
-
     this.setState({ data, errors });
   };
+
+  handleCheckbox = ({ target: input }) => {
+    const value = input.type === 'checkbox' ? input.checked : input.value;
+    const name = input.name;
+
+    const data = { ...this.state.data }
+    data[name] = value;
+    this.setState({ data });
+  }
+
+  handleFileUpload = e => {
+    const data = { ...this.state.data }
+    data.productImage = e.target.files[0]
+    this.setState({ data })
+  }
 
   renderButton(label) {
     return (
@@ -88,6 +103,38 @@ class Form extends Component {
       />
     );
   }
+
+  renderCheckBox(name, label, type = "checkbox") {
+    const { data, errors } = this.state;
+
+    return (
+      <CheckBox
+        type={type}
+        name={name}
+        checked={data[name]}
+        label={label}
+        onChange={this.handleCheckbox}
+        error={errors[name]}
+      />
+    )
+  }
+
+  renderFileUpload(name, label, type = "file") {
+    const { data, errors } = this.state;
+
+    return (
+      <Input
+        type={type}
+        name={name}
+        label={label}
+        // value={data.productImage}
+        onChange={this.handleFileUpload}
+        error={errors[name]}
+      />
+    );
+  }
+
 }
+
 
 export default Form;

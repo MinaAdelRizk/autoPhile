@@ -1,8 +1,14 @@
 import _ from 'underscore'
 import http from './httpService';
-import { apiUrl } from '../config.json'
+import * as configFile from '../config.json'
+import { toast } from 'react-toastify';
 
+const { apiUrl } = configFile
 const apiEndPoint = apiUrl + "/fluids"
+
+const config = {
+    headers: { 'content-type': 'multipart/form-data' }
+}
 
 export function getFluids() {
     return http.get(apiEndPoint)
@@ -15,16 +21,12 @@ export function getMnf() {
 
 export async function addFluid(fluid) {
     try {
-        await http.post(apiEndPoint, fluid)
+        await http.post(apiEndPoint, fluid, config)
     } catch (ex) {
         console.log(ex)
     }
 }
 
 export async function deleteFluid(fluid) {
-    try {
-        await http.delete(apiEndPoint + '/' + fluid._id)
-    } catch (error) {
-
-    }
+    await http.delete(`${apiEndPoint}/${fluid._id}`)
 }

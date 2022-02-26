@@ -1,16 +1,16 @@
 import http from './httpService'
-import { apiUrl } from '../config.json'
+// import * as apiUrl from '../config.json'
 
-const apiEndPoint = apiUrl + "/users"
+const apiEndPoint = `http://localhost:3000/api/users`
 
 export function register(user) {
     return http.post(apiEndPoint, {
         email: user.username,
-        password: user.password,
-        name: user.name
+        name: user.name,
+        mobile: user.mobile,
+        password: user.password
     })
 }
-
 
 export async function updateUserCar(car) {
     localStorage.setItem("selectedCar", `${car.make} ${car.model} ${car.year}`)

@@ -6,6 +6,8 @@ import HListGroup from "./common/hListGroup"
 import VListGroup from './common/vListGroup';
 import _, { iteratee } from 'underscore'
 import { Link } from 'react-router-dom';
+import AddFluid from './listingForms/addFluid';
+import { deleteImage } from '../services/uploadsService';
 import { toast } from 'react-toastify';
 
 class Fluids extends Component {
@@ -51,18 +53,30 @@ class Fluids extends Component {
         this.setState({ fluids })
     }
 
-    handleDelete = item => {
-        deleteFluid(item)
-        toast.success("Fluid Deleted Successfully");
-        function redirect() { window.location = "/fluids" }
-        setTimeout(redirect, 1000);
+    handleDelete = async item => {
+        const originalState = this.state.fluids;
+        const fluids = this.state.fluids.filter(f => f._id !== item._id)
+        this.setState({ fluids })
+        await deleteFluid(item)
+            .then(toast.success("Deleted Successfully"))
+            .catch(ex => {
+                toast.warn(ex.response.data)
+                this.setState({ fluids: originalState })
+            })
+
+
+        // deleteImage(item.productImage);
+
+
+
+        // this.props.history.push('/fluids')
     }
     getPageData = () => {
         const { fluids: allFluids, selectedMnf, selectedVsc } = this.state;
 
         let data = allFluids;
 
-        data = selectedMnf && (selectedMnf._id !== "") ? data.filter(f => f.mnf === selectedMnf) : data;
+        data = selectedMnf && (selectedMnf._id !== "") ? data.filter(f => f.mnf._id === selectedMnf._id) : data;
 
         data = selectedVsc && (selectedVsc !== "All") ? data.filter(f => f.vsc === selectedVsc) : data;
 
@@ -90,7 +104,7 @@ class Fluids extends Component {
                 <div className="col-10 my-1">
 
                     {user && user.isSeller ?
-                        <Link to="/addFluid"><button className="btn btn-success">Add Fluid</button></Link> : null}
+                        <Link to="fluids/addFluid" render={<AddFluid />}><button className="btn btn-success">Add Fluid</button></Link> : null}
 
                     <HListGroup
                         items={vsc}

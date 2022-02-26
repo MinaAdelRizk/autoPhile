@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import VListGroup from './common/vListGroup';
 import HListGroup from './common/hListGroup';
-import { getTyres, deleteTyre, addTyre } from '../services/tyresService';
+import { getTyres, deleteTyre } from '../services/tyresService';
+import AddTyre from './listingForms/addTyre';
 import auth from '../services/authService'
 import PartsGrid from './partsGrid';
 import _ from 'underscore'
@@ -25,7 +26,7 @@ class Tyres extends Component {
 
     async componentDidMount() {
         const { data: tyres } = await getTyres();
-        let manufacturers = tyres.map(t => t.manufacturer)
+        let manufacturers = tyres.map(t => t.mnf)
         manufacturers = _.uniq(manufacturers, _.iteratee('_id'))
         console.log(manufacturers)
 
@@ -74,18 +75,26 @@ class Tyres extends Component {
     //     this.setState({ tires: tyres })
     // }
 
-    handleDelete = (item) => {
-        deleteTyre(item)
-        toast.success("Tyre Deleted Successfully");
-        function redirect() { window.location = "/tyres" }
-        setTimeout(redirect, 1000);
+    handleDelete = async item => {
+        const originalState = this.state.tyres;
+        const tyres = this.state.tyres.filter(t => t._id !== item._id)
+        this.setState({ tyres })
+        await deleteTyre(item)
+            .then(toast.success("Tyre Deleted Successfully"))
+            .catch(ex => {
+                toast.warn(ex.response.data)
+                this.setState({ fluids: originalState })
+            })
+
+        // function redirect() { window.location = "/tyres" }
+        // setTimeout(redirect, 1000);
     }
 
     getPageData = () => {
         const { tyres: allTyres, selectedMnf, selectedWidth, selectedHeight, selectedRim } = this.state;
         let data = allTyres;
 
-        data = selectedMnf && (selectedMnf.name !== "All") ? data.filter(t => t.manufacturer._id === selectedMnf._id) : allTyres;
+        data = selectedMnf && (selectedMnf.name !== "All") ? data.filter(t => t.mnf._id === selectedMnf._id) : allTyres;
 
         data = selectedWidth && (selectedWidth !== "All") ? data.filter(t => t.width === selectedWidth) : data
 
@@ -119,6 +128,10 @@ class Tyres extends Component {
                 </div>
 
                 <div className="col-10 my-1">
+                    {user && user.isSeller ?
+                        <Link to="tyres/addtyre" render={<AddTyre />}>
+                            <button className="btn btn-success">Add Tyre</button>
+                        </Link> : null}
 
                     <HListGroup
                         title="W: "
@@ -146,7 +159,8 @@ class Tyres extends Component {
                     />
                     {divider}
 
-                    {user && user.isSeller ? <Link to="/addTyre">Add Tyre</Link> : null}
+                    <h6>found: {tyres.length} Tyre</h6>
+
                     <PartsGrid
                         items={tyres}
                         onDelete={this.handleDelete}

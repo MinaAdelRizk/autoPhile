@@ -17,11 +17,14 @@ function CarMenu() {
 
     let [selectedYear, setSelectedYear] = useState([])
 
-    useEffect(async () => {
-        let { data: makes } = await getMakes()
-        setMakes(makes)
+    useEffect(() => {
+        async function getData() {
+            let { data: makes } = await getMakes()
+            setMakes(makes)
+        }
         let user = getCurrentUser()
         setUser(user)
+        getData()
     }, []);
 
     async function handleMakeChange({ currentTarget: input }) {

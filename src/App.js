@@ -9,8 +9,8 @@ import RegisterForm from './components/registerForm';
 import LoginForm from './components/loginForm';
 import Profile from './components/profile';
 import Fluids from './components/fluids';
-import AddFluid from './components/addFluid';
-import AddTyre from './components/addTyre'
+import AddFluid from './components/listingForms/addFluid';
+import AddTyre from './components/listingForms/addTyre'
 import Tyres from './components/tyres';
 import auth from './services/authService'
 
@@ -48,27 +48,27 @@ function App() {
           <Route path="/home" component={Home} />
           <Route path="/spare-parts" component={SpareParts} />
           <Route path="/maintenance" component={Maintenance} />
+          <Route path="/tyres/:addTyre"
+            component={AddTyre} />
           <Route path="/tyres" component={Tyres} />
           <Route path="/batteries" component={SpareParts} />
-          <Route path="/fluids" component={Fluids} />
           <Route path="/request-service-quotation" component={SpareParts} />
           <Route path="/login" component={LoginForm} />
           <Route path="/register" component={RegisterForm} />
-          <Route path="/profile" component={Profile} />
+          <Route path="/profile" render={props => <Profile user={user} />} />
 
-          <Route path="/addFluid" render={props => {
-            if (!user) return <Redirect to="/login" />
-            if (!user.isSeller) return <Redirect to="/fluids" />
-            return <AddFluid {...props} />
-          }} />
+          <Route
+            path="/fluids/:addFluid"
+            render={props => <AddFluid />}
+          />
+          <Route path="/fluids" component={Fluids} />
 
-          <Route path="/addTyre" render={props => {
-            if (!user) return <Redirect to="/login" />
-            if (!user.isSeller) return <Redirect to="/fluids" />
-            return <AddTyre {...props} />
-          }} />
-
+          <Route
+            path="/addTyre"
+            render={props => <AddTyre {...props} />}
+          />
           <Redirect exact from="/" to="/home" />
+
           <Route path="/not-found" component={NotFound} />
           <Redirect to="/not-found" />
         </Switch>

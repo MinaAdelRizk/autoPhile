@@ -15,7 +15,7 @@ const VListGroup = ({
         <div className="vertical-list">
             <h5>Filter By:</h5>
             {title ? <h6>{title}</h6> : null}
-            <ul className="list-group-flush p-0" style={{
+            <ul className="list-group-flush pl-3" style={{
                 width: "100%"
             }}>
                 {items.map(item => (
